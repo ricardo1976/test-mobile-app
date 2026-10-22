@@ -1,0 +1,15 @@
+[agents]
+enabled = true
+max_threads = 6
+
+[agents.issue-analyst]
+description = "Analyze GitHub Issues for completeness, acceptance criteria, dependencies, risks, and architectural impact before implementation."
+config_file = "agents/issue-analyst.toml"
+
+[agents.developer]
+description = "Implement approved GitHub Issues and sub-issues, including tests, verification, commits, and Pull Requests."
+config_file = "agents/developer.toml"
+
+[agents.pr-reviewer]
+description = "Independently review Pull Requests for correctness, requirements traceability, architecture, security, testing, maintainability, and regressions."
+config_file = "agents/pr-reviewer.toml"
