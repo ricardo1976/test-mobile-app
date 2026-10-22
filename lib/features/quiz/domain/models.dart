@@ -224,8 +224,11 @@ class QuizResult {
       throw ArgumentError.value(answers, 'answers', 'Must not contain multiple answers for one question');
     }
     if (correctAnswers < 0 || totalQuestions < 0 || correctAnswers > totalQuestions ||
+        correctAnswers > answers.length ||
         answers.length > totalQuestions) {
-      throw ArgumentError('Result counts must be non-negative and cannot exceed totalQuestions');
+      throw ArgumentError(
+        'Result counts must be non-negative, correctAnswers cannot exceed answers.length, and counts cannot exceed totalQuestions',
+      );
     }
   }
 
