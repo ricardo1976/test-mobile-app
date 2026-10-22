@@ -57,6 +57,31 @@ void main() {
     expect(errors.join('\n'), contains('id "q1" is duplicated'));
   });
 
+  test('rejects non-string categories', () {
+    final question = validQuestion()..['categoryId'] = 123;
+    final errors = validateQuestionBank({
+      'schemaVersion': 1,
+      'questions': [question],
+    });
+    expect(
+      errors.join('\n'),
+      contains('questions[0].categoryId must be a string'),
+    );
+  });
+
+  test('reports duplicate answer IDs', () {
+    final question = validQuestion();
+    (question['answers'] as List)[1]['id'] = 'a1';
+    final errors = validateQuestionBank({
+      'schemaVersion': 1,
+      'questions': [question],
+    });
+    expect(
+      errors.join('\n'),
+      contains('questions[0].answers[1].id "a1" is duplicated'),
+    );
+  });
+
   test('reports missing and multiple correct answers', () {
     final question = validQuestion();
     (question['answers'] as List)[0]['isCorrect'] = false;

@@ -61,7 +61,9 @@ List<String> validateQuestionBank(Object? value) {
     }
 
     final categoryId = question['categoryId'];
-    if (categoryId is String && !questionBankCategoryIds.contains(categoryId)) {
+    if (categoryId is! String) {
+      errors.add('$path.categoryId must be a string.');
+    } else if (!questionBankCategoryIds.contains(categoryId)) {
       errors.add('$path.categoryId "$categoryId" is invalid.');
     }
     if (question['decade'] is! int ||
@@ -86,6 +88,7 @@ List<String> validateQuestionBank(Object? value) {
       errors.add('$path.answers must contain exactly 4 answers.');
     }
     var correctCount = 0;
+    final answerIds = <String>{};
     for (var j = 0; j < answers.length; j++) {
       final answerPath = '$path.answers[$j]';
       final answer = answers[j];
@@ -98,8 +101,11 @@ List<String> validateQuestionBank(Object? value) {
           errors.add('$answerPath.$field is required.');
         }
       }
-      if (answer['id'] is! String || (answer['id'] as String).trim().isEmpty) {
+      final answerId = answer['id'];
+      if (answerId is! String || answerId.trim().isEmpty) {
         errors.add('$answerPath.id must be a non-empty string.');
+      } else if (!answerIds.add(answerId)) {
+        errors.add('$answerPath.id "$answerId" is duplicated.');
       }
       _validateLocalizedText(answer['text'], '$answerPath.text', errors);
       if (answer['isCorrect'] is! bool) {
