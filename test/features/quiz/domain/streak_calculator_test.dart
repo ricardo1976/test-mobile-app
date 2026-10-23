@@ -100,6 +100,30 @@ void main() {
     });
 
     test('handles the spring daylight-saving calendar boundary', () {
+      // Spain advances from UTC+01:00 to UTC+02:00 on 2026-03-29.
+      // Noon on consecutive local dates is therefore only 23 hours apart.
+      const standardOffset = Duration(hours: 1);
+      const daylightOffset = Duration(hours: 2);
+      final previousLocalNoonUtc = DateTime.utc(
+        2026,
+        3,
+        28,
+        12,
+      ).subtract(standardOffset);
+      final currentLocalNoonUtc = DateTime.utc(
+        2026,
+        3,
+        29,
+        12,
+      ).subtract(daylightOffset);
+
+      expect(
+        currentLocalNoonUtc.difference(previousLocalNoonUtc),
+        const Duration(hours: 23),
+      );
+
+      // These are local civil date fields; the test does not use the machine's
+      // time zone to construct or compare the dates.
       final status = calculator.calculate(
         progress: [progress(DateTime(2026, 3, 28, 12))],
         today: DateTime(2026, 3, 29, 12),
