@@ -44,7 +44,7 @@ class CuantoRecuerdasApp extends StatelessWidget {
                 ),
               ),
             );
-case '/history':
+          case '/history':
             return MaterialPageRoute(
               builder: (_) => HistoryScreen(dependencies: dependencies),
             );

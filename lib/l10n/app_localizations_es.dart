@@ -22,6 +22,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeDailyAvailable => 'Reto diario disponible.';
 
   @override
+  String get homeInProgress => 'Reto en progreso.';
+
+  @override
   String get playDailyQuiz => 'Jugar reto diario';
 
   @override
@@ -29,6 +32,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get emptyState => 'No hay datos disponibles.';
+
+  @override
+  String get historyEmpty => 'Sin resultados todavía.';
 
   @override
   String get retry => 'Reintentar';

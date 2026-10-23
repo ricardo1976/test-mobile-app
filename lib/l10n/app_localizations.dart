@@ -118,6 +118,12 @@ abstract class AppLocalizations {
   /// **'Reto diario disponible.'**
   String get homeDailyAvailable;
 
+  /// No description provided for @homeInProgress.
+  ///
+  /// In es, this message translates to:
+  /// **'Reto en progreso.'**
+  String get homeInProgress;
+
   /// No description provided for @playDailyQuiz.
   ///
   /// In es, this message translates to:
@@ -135,6 +141,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'No hay datos disponibles.'**
   String get emptyState;
+
+  /// No description provided for @historyEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin resultados todavía.'**
+  String get historyEmpty;
 
   /// No description provided for @retry.
   ///

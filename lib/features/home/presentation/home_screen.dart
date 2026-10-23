@@ -100,12 +100,16 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               _status == HomeStatus.completed
                   ? l10n.homeCompletedToday
-                  : l10n.homeDailyAvailable,
+                  : (_status == HomeStatus.inProgress
+                        ? l10n.homeInProgress
+                        : l10n.homeDailyAvailable),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
             AppPrimaryButton(
-              onPressed: () => Navigator.of(context).pushNamed('/quiz'),
+              onPressed: _status == HomeStatus.completed
+                  ? null
+                  : () => Navigator.of(context).pushNamed('/quiz'),
               child: Text(l10n.playDailyQuiz),
             ),
             const SizedBox(height: 12),
