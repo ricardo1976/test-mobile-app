@@ -1,0 +1,15 @@
+{
+  "@@locale": "es",
+  "appTitle": "¿Cuánto recuerdas?",
+  "homeLoadingError": "No se pudo cargar la aplicación.",
+  "homeCompletedToday": "Ya completaste el reto de hoy.",
+  "homeDailyAvailable": "Reto diario disponible.",
+  "homeInProgress": "Reto en progreso.",
+  "playDailyQuiz": "Jugar reto diario",
+  "viewHistory": "Ver historial",
+  "emptyState": "No hay datos disponibles.",
+  "historyEmpty": "Sin resultados todavía.",
+  "retry": "Reintentar",
+  "dailyQuiz": "Reto diario",
+  "history": "Historial"
+}

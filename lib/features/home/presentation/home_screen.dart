@@ -1,179 +1,124 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/theme/app_theme.dart';
+import '../../../app/dependencies.dart';
+import '../../../app/widgets/app_buttons.dart';
+import '../../../l10n/app_localizations.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+enum HomeStatus { loading, available, inProgress, completed, error }
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key, required this.dependencies});
+
+  final AppDependencies dependencies;
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  HomeStatus _status = HomeStatus.loading;
+  String? _quizId;
+
+  @override
+  void initState() {
+    super.initState();
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    try {
+      await widget.dependencies.initialize();
+      final version = await widget.dependencies.questionRepository
+          .getSchemaVersion();
+      final now = DateTime.now();
+      final dateId =
+          '${now.year.toString().padLeft(4, '0')}${now.month.toString().padLeft(2, '0')}${now.day.toString().padLeft(2, '0')}';
+      _quizId = 'daily-$dateId-v$version';
+      final completed = widget.dependencies.progressRepository
+          .completedQuizToday(_quizId!);
+      final inProgress =
+          !completed &&
+          widget.dependencies.progressRepository.inProgressToday();
+      if (!mounted) return;
+      setState(() {
+        _status = completed
+            ? HomeStatus.completed
+            : (inProgress ? HomeStatus.inProgress : HomeStatus.available);
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _status = HomeStatus.error);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 560),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const _BrandHeader(),
-                  const SizedBox(height: 48),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 7,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppPalette.mustard.withValues(alpha: 0.24),
-                      borderRadius: BorderRadius.circular(99),
-                    ),
-                    child: Text(
-                      'FASE DE DEMOSTRACIÓN',
-                      style: textTheme.labelSmall?.copyWith(
-                        color: AppPalette.ink,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.8,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 18),
-                  Text(
-                    '¿Cuánto\nrecuerdas?',
-                    style: textTheme.headlineLarge?.copyWith(fontSize: 48),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Un pequeño viaje por la cultura popular que marcó los '
-                    '80, los 90 y los 2000.',
-                    style: textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 32),
-                  const _DailyQuizPreview(),
-                  const SizedBox(height: 20),
-                  Center(
-                    child: Text(
-                      'El juego todavía no está activo.',
-                      textAlign: TextAlign.center,
-                      style: textTheme.bodyMedium,
-                    ),
-                  ),
-                ],
-              ),
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: _buildBody(context, l10n),
             ),
           ),
         ),
       ),
     );
   }
-}
 
-class _BrandHeader extends StatelessWidget {
-  const _BrandHeader();
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            color: AppPalette.ink,
-            borderRadius: BorderRadius.circular(14),
-          ),
-          child: const Icon(Icons.graphic_eq, color: AppPalette.paper),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            '¿Cuánto recuerdas?',
-            style: Theme.of(context).textTheme.titleMedium
-                ?.copyWith(color: AppPalette.ink, fontWeight: FontWeight.w800),
-          ),
-        ),
-        Text(
-          'V0.1',
-          style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            color: AppPalette.mutedInk,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _DailyQuizPreview extends StatelessWidget {
-  const _DailyQuizPreview();
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(22),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppPalette.ink.withValues(alpha: 0.08)),
-        boxShadow: [
-          BoxShadow(
-            color: AppPalette.ink.withValues(alpha: 0.06),
-            blurRadius: 24,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+  Widget _buildBody(BuildContext context, AppLocalizations l10n) {
+    switch (_status) {
+      case HomeStatus.loading:
+        return const Center(child: CircularProgressIndicator());
+      case HomeStatus.error:
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.wb_sunny_outlined, color: AppPalette.coral),
-              const SizedBox(width: 8),
-              Text('EL RETO DIARIO', style: textTheme.labelLarge),
+              Text(l10n.homeLoadingError),
+              const SizedBox(height: 12),
+              AppPrimaryButton(onPressed: _initialize, child: Text(l10n.retry)),
             ],
           ),
-          const SizedBox(height: 20),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '5',
-                style: textTheme.displayLarge?.copyWith(
-                  color: AppPalette.ink,
-                  fontWeight: FontWeight.w800,
-                  height: 0.9,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 3),
-                  child: Text(
-                    'preguntas para despertar recuerdos',
-                    style: textTheme.bodyLarge?.copyWith(
-                      color: AppPalette.ink,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          const Divider(height: 1),
-          const SizedBox(height: 16),
-          Text(
-            'Televisión, música, cine y mucho más.',
-            style: textTheme.bodyMedium,
-          ),
-        ],
-      ),
-    );
+        );
+      case HomeStatus.available:
+      case HomeStatus.inProgress:
+      case HomeStatus.completed:
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              l10n.appTitle,
+              style: Theme.of(context).textTheme.headlineLarge,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            Text(
+              _status == HomeStatus.completed
+                  ? l10n.homeCompletedToday
+                  : (_status == HomeStatus.inProgress
+                        ? l10n.homeInProgress
+                        : l10n.homeDailyAvailable),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            AppPrimaryButton(
+              onPressed: _status == HomeStatus.completed
+                  ? null
+                  : () => Navigator.of(context).pushNamed('/quiz'),
+              child: Text(l10n.playDailyQuiz),
+            ),
+            const SizedBox(height: 12),
+            AppSecondaryButton(
+              onPressed: () => Navigator.of(context).pushNamed('/history'),
+              child: Text(l10n.viewHistory),
+            ),
+          ],
+        );
+    }
   }
 }
