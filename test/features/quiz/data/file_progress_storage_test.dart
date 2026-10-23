@@ -67,6 +67,75 @@ void main() {
     });
 
     test(
+      'replaces an existing file with a completed temporary write',
+      () async {
+        final file = fileAt('replace-existing');
+        final storage = FileProgressStorage(file);
+        final initial = StoredProgress.empty();
+        final replacement = StoredProgress(
+          quizResults: [],
+          dailyProgress: [],
+          statistics: GameStatistics(
+            gamesPlayed: 1,
+            correctAnswers: 2,
+            totalAnswers: 5,
+            currentStreak: 1,
+            longestStreak: 1,
+          ),
+        );
+
+        await storage.save(initial);
+        await storage.save(replacement);
+
+        final restored = await FileProgressStorage(file).load();
+        expect(restored.statistics, replacement.statistics);
+      },
+    );
+
+    test('keeps previous progress if writing a replacement fails', () async {
+      final file = fileAt('preserved-progress');
+      final previous = StoredProgress(
+        quizResults: [],
+        dailyProgress: [],
+        statistics: GameStatistics(
+          gamesPlayed: 2,
+          correctAnswers: 3,
+          totalAnswers: 5,
+          currentStreak: 2,
+          longestStreak: 4,
+        ),
+      );
+      await FileProgressStorage(file).save(previous);
+
+      final failingStorage = FileProgressStorage(
+        file,
+        temporaryFileWriter: (temporaryFile, contents) async {
+          await temporaryFile.writeAsString(
+            contents.substring(0, contents.length ~/ 2),
+            flush: true,
+          );
+          throw const FileSystemException('Simulated interrupted write');
+        },
+      );
+
+      await expectLater(
+        failingStorage.save(StoredProgress.empty()),
+        throwsA(isA<ProgressStorageIoException>()),
+      );
+
+      final restored = await FileProgressStorage(file).load();
+      expect(restored.quizResults, previous.quizResults);
+      expect(restored.dailyProgress, previous.dailyProgress);
+      expect(restored.statistics, previous.statistics);
+      expect(
+        temporaryDirectory.listSync().where(
+          (entry) => entry.path.startsWith('${file.path}.'),
+        ),
+        isEmpty,
+      );
+    });
+
+    test(
       'returns an empty initial state when the file does not exist',
       () async {
         final progress = await FileProgressStorage(fileAt('missing')).load();

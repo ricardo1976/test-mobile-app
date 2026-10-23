@@ -10,11 +10,13 @@ import 'progress_storage.dart';
 /// application-support directory. Keeping that path outside this class avoids
 /// coupling the domain or storage contract to a platform path provider.
 class FileProgressStorage implements ProgressStorage {
-  FileProgressStorage(this.file);
+  FileProgressStorage(this.file, {ProgressFileWriter? temporaryFileWriter})
+    : _temporaryFileWriter = temporaryFileWriter ?? _writeTemporaryFile;
 
   static const int currentFormatVersion = 1;
 
   final File file;
+  final ProgressFileWriter _temporaryFileWriter;
 
   @override
   Future<StoredProgress> load() async {
@@ -57,11 +59,34 @@ class FileProgressStorage implements ProgressStorage {
       'statistics': progress.statistics.toJson(),
     };
 
+    File? temporaryFile;
     try {
       await file.parent.create(recursive: true);
-      await file.writeAsString(jsonEncode(payload), flush: true);
+      temporaryFile = File(
+        '${file.path}.$pid.${DateTime.now().microsecondsSinceEpoch}.tmp',
+      );
+      await _temporaryFileWriter(temporaryFile, jsonEncode(payload));
+      await temporaryFile.rename(file.path);
+      temporaryFile = null;
     } on FileSystemException catch (error) {
+      await _deleteTemporaryFile(temporaryFile);
       throw ProgressStorageIoException(error.message);
+    } on Object {
+      await _deleteTemporaryFile(temporaryFile);
+      rethrow;
+    }
+  }
+
+  static Future<void> _writeTemporaryFile(File file, String contents) async {
+    await file.writeAsString(contents, flush: true);
+  }
+
+  static Future<void> _deleteTemporaryFile(File? file) async {
+    if (file == null) return;
+    try {
+      if (await file.exists()) await file.delete();
+    } on Object {
+      // Preserve the original write/rename error if cleanup also fails.
     }
   }
 
@@ -118,3 +143,9 @@ class FileProgressStorage implements ProgressStorage {
     }
   }
 }
+
+/// Writes the complete JSON payload to the temporary file and flushes it.
+///
+/// This callback is injectable so tests can reliably exercise interrupted
+/// writes without relying on platform-specific filesystem permissions.
+typedef ProgressFileWriter = Future<void> Function(File file, String contents);
