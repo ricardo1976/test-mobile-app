@@ -1,1106 +1,694 @@
-# Roadmap
+# ¿Cuánto recuerdas? — Development Roadmap
 
-## V0.1
+## 1. Purpose
 
-**Issue 1 — Crear estructura base del proyecto Flutter**
+This document defines the planned implementation roadmap for the first version of **¿Cuánto recuerdas?**, a nostalgic daily quiz application built with Flutter.
 
-**Title**
+The roadmap is the initial source of planned work. GitHub Issues must be created incrementally as implementation progresses rather than creating the entire backlog upfront.
 
-Foundation: Crear estructura base del proyecto Flutter
+The coordinating agent is responsible for selecting the next eligible roadmap item, ensuring its requirements are sufficiently clear, creating the corresponding GitHub Issue, delegating implementation, and tracking its completion.
 
-**Description**
+## 2. Product scope
 
-Crear la estructura inicial del proyecto Flutter para **¿Cuánto recuerdas?**, siguiendo una arquitectura sencilla por capas y evitando introducir complejidad innecesaria.
+### Platforms and technology
 
-La aplicación debe quedar preparada para separar claramente:
+- Flutter and Dart.
+- Android and iOS.
+- Multilingual architecture from the beginning.
+- Spanish (Spain), `es-ES`, as the default application locale.
 
-* Presentation/UI  
-* Domain/game logic  
-* Data/repositories  
-* Local persistence  
-* Static content  
-* Services
+### Gameplay
 
-La aplicación debe arrancar correctamente en Android y iOS.
+- One daily quiz containing five questions.
+- A deterministic daily selection that mixes categories and decades.
+- An initial question bank of 500 questions.
+- Exactly four answer options per question.
+- Exactly one correct answer per question.
+- An explanation associated with each question.
 
-La estructura debe permitir que la lógica del juego pueda probarse sin depender de widgets Flutter.
+### Initial question distribution
 
-**Acceptance Criteria**
+| Category | Questions |
+|---|---:|
+| Television | 125 |
+| Music | 100 |
+| Cinema | 100 |
+| Video games and technology | 75 |
+| Everyday culture and memories | 100 |
+| **Total** | **500** |
 
-* El proyecto Flutter compila correctamente.  
-* La aplicación arranca en Android.  
-* La aplicación arranca en iOS.  
-* Existe una estructura clara de carpetas para presentation, domain, data, services y content.  
-* La lógica de dominio no depende de Flutter UI.  
-* No se añade ningún backend.  
-* No se añade autenticación.  
-* No se añade analytics.  
-* No se añade AdMob.  
-* Se documentan brevemente las decisiones arquitectónicas principales.  
-* Se mantienen las dependencias externas al mínimo razonable.
+### Progress and persistence
 
-**Dependencies**
+- Local persistence without mandatory accounts.
+- Daily completion status.
+- Quiz results and statistics.
+- Streak tracking.
+- Historical results.
+- Sharing of quiz results.
 
-Ninguna.
+### Monetization
 
-**Agent Instructions**
+- Prepare an advertising abstraction.
+- Provide a no-op implementation for V0.1.
+- Do not integrate AdMob in V0.1.
 
-Implementa únicamente la infraestructura base. No implementes todavía lógica de juego, persistencia, UI completa ni contenido. No introduzcas patrones arquitectónicos complejos si no son necesarios. Prioriza una estructura sencilla que permita que varios agentes trabajen posteriormente en paralelo.
+### Explicit exclusions from V0.1
 
----
+- Backend services.
+- User accounts and authentication.
+- Cloud synchronization.
+- Analytics integration.
+- Live or remotely managed questions.
+- Actual advertising delivery.
 
-**Issue 2 — Definir modelos de dominio**
+## 3. Roadmap governance
 
-**Title**
+### Incremental GitHub Issue creation
 
-Domain: Definir modelos de dominio del juego
+The roadmap entries below are planning references, not existing GitHub Issues.
 
-**Description**
+- `R01`–`R26` are stable internal roadmap identifiers.
+- They must not be presented as GitHub Issue numbers.
+- Before creating an Issue, check whether an equivalent Issue already exists.
+- Create a GitHub Epic when its first child Issue is ready to be created, unless an equivalent Epic already exists.
+- Create each child Issue when its scope, acceptance criteria, dependencies, and constraints are sufficiently clear.
+- Create additional sub-issues only when a roadmap item requires independently implementable work.
+- Link Issues to their parent Epic and establish dependency relationships where supported.
+- Update this roadmap as work progresses, without removing planned work that has not yet been implemented.
+- Do not create the entire backlog merely to populate GitHub.
+- If a roadmap item requires a product or architecture decision, request that decision before implementing the affected behavior.
 
-Crear los modelos Dart que representan el dominio de **¿Cuánto recuerdas?**.
+### Issue readiness
 
-Como mínimo:
+Every implementation Issue must include:
 
-* Question  
-* Answer  
-* Quiz  
-* QuizQuestion  
-* QuizResult  
-* DailyProgress  
-* GameStatistics
+- Objective.
+- Scope.
+- Acceptance criteria.
+- Dependencies.
+- Relevant architectural and product constraints.
+- Testing and verification expectations.
 
-Los modelos deben representar únicamente conceptos del dominio y no depender de widgets ni de la implementación concreta de persistencia.
+### Workflow
 
-**Acceptance Criteria**
+1. Identify the next eligible roadmap item.
+2. Delegate requirements analysis to `issue-analyst`.
+3. Resolve material ambiguities and dependencies.
+4. Create or update the GitHub Issue and link it to its Epic.
+5. Delegate implementation to `developer`.
+6. Run relevant tests, formatting, and static analysis.
+7. Review the changes and create or update a Pull Request.
+8. Delegate an independent review to `pr-reviewer`.
+9. Resolve blocking findings and repeat verification.
+10. Update the Issue, Pull Request, and roadmap to reflect the actual outcome.
+11. Continue with the next eligible item.
 
-* Todos los modelos están definidos.  
-* Los tipos de datos están correctamente definidos.  
-* Los modelos son inmutables cuando sea apropiado.  
-* Question permite representar exactamente cuatro respuestas.  
-* Question permite identificar inequívocamente la respuesta correcta.  
-* Question contiene ID estable, categoría, década/año, texto y explicación.  
-* Los modelos no dependen de Flutter UI.  
-* Existen tests para las partes relevantes del dominio.  
-* Se documentan las decisiones no obvias.
+Independent work may run in parallel when dependencies are satisfied and file ownership does not create significant conflicts.
 
-**Dependencies**
+The coordinator must never claim that an agent was invoked, an Issue was created, a test passed, or a review was completed unless the action actually occurred.
 
-Issue 1\.
+## 4. Epic hierarchy
 
-**Agent Instructions**
+The planned hierarchy consists of seven Epics.
 
-No implementes todavía almacenamiento ni carga JSON. Define contratos de dominio estables que los demás agentes puedan utilizar. Si necesitas tomar una decisión no especificada, elige la alternativa más sencilla y documenta la decisión.
+| Epic reference | Epic title | Scope | Planned Issues |
+|---|---|---|---|
+| E01 | Foundation and Architecture | Project structure, localization, design foundations, dependency configuration | R01–R04 |
+| E02 | Question Bank and Game Engine | Question models, content validation, deterministic selection, scoring | R05–R08 |
+| E03 | Local Persistence and Progress | Storage, daily completion, statistics, streaks, history | R09–R11 |
+| E04 | Application Services | Dependency wiring and advertising abstraction | R12–R13 |
+| E05 | User Interface and Daily Experience | Navigation, onboarding, quiz flow, results, history, sharing | R14–R19 |
+| E06 | Quality and Reliability | Automated testing, content integrity, accessibility and resilience | R20–R22 |
+| E07 | Documentation and Release | Documentation, platform configuration, release validation | R23–R26 |
 
----
-
-**Issue 3 — Definir formato y validador del banco de preguntas**
-
-**Title**
-
-Content: Definir formato JSON y validador del banco de preguntas
-
-**Description**
-
-Definir el formato versionado del banco de preguntas y crear un validador que permita detectar errores antes de incorporar contenido a la aplicación.
-
-El banco tendrá inicialmente 500 preguntas.
-
-Cada pregunta debe contener:
-
-* ID estable  
-* categoría  
-* década/año  
-* pregunta  
-* exactamente cuatro respuestas  
-* una única respuesta correcta  
-* explicación
-
-El banco debe incluir una versión explícita.
-
-**Acceptance Criteria**
-
-* Existe un formato JSON documentado.  
-* El JSON contiene versión del banco.  
-* Los IDs son únicos.  
-* Cada pregunta tiene exactamente cuatro respuestas.  
-* Cada pregunta tiene exactamente una respuesta correcta.  
-* Se validan categorías permitidas.  
-* Se validan décadas/años permitidos.  
-* Se validan campos obligatorios.  
-* El validador detecta IDs duplicados.  
-* El validador detecta preguntas inválidas.  
-* El proceso devuelve errores suficientemente claros.  
-* Existe al menos un ejemplo válido.  
-* Existen ejemplos de contenido inválido cubiertos por tests.
-
-**Dependencies**
-
-Issue 2\.
-
-**Agent Instructions**
-
-El formato debe ser estable y fácil de mantener manualmente. No diseñes un sistema de CMS ni una infraestructura de generación compleja. El objetivo es disponer de un JSON versionado dentro de los assets de Flutter.
+These Epics define the planned scope, not mandatory execution batches. The coordinator may adjust sequencing when implementation findings justify it, while preserving traceability.
 
 ---
 
-**Issue 4 — Crear banco inicial de 500 preguntas**
+# 5. Epic E01 — Foundation and Architecture
 
-**Title**
+**Objective:** Establish a maintainable Flutter application foundation, including localization, shared UI foundations, and dependency configuration.
 
-Content: Crear banco inicial de 500 preguntas
+## R01 — Establish the Flutter project foundation
 
 **Description**
 
-Crear el banco inicial completo de 500 preguntas en español de España.
+Create or verify the initial Flutter project structure and establish the conventions required for Android and iOS development.
 
-Distribución objetivo:
+Keep the architecture simple and consistent with `docs/architecture.md`.
 
-| Categoría | Cantidad |
-| :---- | :---- |
-| TV | 125 |
-| Música | 100 |
-| Cine | 100 |
-| Videojuegos / tecnología | 75 |
-| Cultura cotidiana / recuerdos | 100 |
+**Acceptance criteria**
 
-Las preguntas deben cubrir razonablemente las décadas de los 80, 90 y 2000\.
+- The application builds for Android and iOS.
+- The repository follows the agreed source-code organization.
+- Development, test, and build commands are documented or discoverable.
+- No unnecessary architectural or third-party dependencies are introduced.
+- Generated files are managed through the normal Flutter workflow.
 
-Cada pregunta debe tener:
+**Dependencies:** None.
 
-* una única respuesta correcta  
-* tres distractores plausibles  
-* explicación  
-* información de década/año  
-* ID estable
+## R02 — Implement localization foundations
 
-**Acceptance Criteria**
+**Description**
 
-* Existen exactamente 500 preguntas.  
-* La distribución por categorías coincide con la especificada.  
-* Las preguntas están repartidas entre los 80, 90 y 2000\.  
-* Cada pregunta tiene exactamente cuatro respuestas.  
-* Cada pregunta tiene exactamente una correcta.  
-* Todas tienen explicación.  
-* No existen IDs duplicados.  
-* El banco pasa el validador.  
-* Las preguntas están redactadas en español de España.  
-* Se evita contenido ambiguo cuando sea posible.  
-* Se evita que la respuesta correcta sea deducible simplemente por longitud o redacción.  
-* No se introducen preguntas que dependan de información posterior a la época indicada salvo que sea intencionado y esté claramente justificado.
+Configure Flutter localization so that application text is independent of UI implementation and can support additional languages.
 
-**Dependencies**
+**Acceptance criteria**
 
-Issue 3\.
+- Spanish (Spain), `es-ES`, is the default locale.
+- User-facing text is externalized using the project's localization mechanism.
+- Locale configuration is compatible with Android and iOS.
+- Missing translations are handled predictably.
+- Tests verify the default locale and representative localized strings.
+- Question content is not hard-coded directly into presentation widgets.
 
-**Agent Instructions**
+**Dependencies:** R01.
 
-Esta tarea es principalmente de generación/revisión de contenido. No modifiques el motor del juego ni la arquitectura. Si se detectan problemas en el esquema JSON, documenta el problema en lugar de cambiar unilateralmente el contrato definido en el Issue 3\.
+## R03 — Establish the shared design system
+
+**Description**
+
+Implement the reusable visual foundations for the modern retro style defined by the product documentation.
+
+**Acceptance criteria**
+
+- Shared color, typography, spacing, and component conventions are established.
+- Reusable buttons, cards, and other required primitives are available where appropriate.
+- Components support the required accessibility and localization constraints.
+- The design is responsive to common mobile screen sizes.
+- The implementation avoids unnecessary abstractions.
+
+**Dependencies:** R01, R02.
+
+## R04 — Configure application composition and state management
+
+**Description**
+
+Establish the application's composition root and the agreed state-management and dependency-injection approach.
+
+**Acceptance criteria**
+
+- Application dependencies have a clear creation and ownership strategy.
+- Business logic is separated from presentation widgets.
+- Persistent storage and external services can be replaced with test doubles.
+- The application uses one coherent state-management approach.
+- Unit and widget tests can instantiate the relevant components without production services.
+
+**Dependencies:** R01.
 
 ---
 
-**Issue 5 — Implementar QuestionRepository**
+# 6. Epic E02 — Question Bank and Game Engine
 
-**Title**
+**Objective:** Implement the question domain, validated content, daily question selection, and scoring independently of the UI.
 
-Data: Implementar QuestionRepository
+## R05 — Define the question and quiz domain models
 
 **Description**
 
-Implementar el repositorio responsable de cargar y consultar el banco de preguntas desde los assets de la aplicación.
+Create the immutable domain models required to represent questions, answers, quiz sessions, and quiz results.
 
-Debe abstraer completamente a los consumidores de la ubicación física del JSON.
+**Acceptance criteria**
 
-Operaciones mínimas:
+- Questions have stable, unique identifiers.
+- Each question supports localized content.
+- Each question contains exactly four answer options.
+- Exactly one answer is correct.
+- Each question has an explanation suitable for localization.
+- Quiz sessions can represent question order and answer progress.
+- Models have unit tests for their essential invariants.
 
-* cargar banco  
-* obtener todas las preguntas  
-* obtener por categoría  
-* obtener por década  
-* obtener por ID  
-* obtener versión del banco
+**Dependencies:** R01, R02.
 
-**Acceptance Criteria**
+## R06 — Implement the versioned question bank
 
-* El JSON se carga desde los assets de Flutter.  
-* El repositorio expone una API clara.  
-* El resto de la aplicación no necesita conocer la ruta física del JSON.  
-* Se puede obtener la versión del banco.  
-* Se pueden consultar preguntas por ID.  
-* Se pueden consultar preguntas por categoría.  
-* Se pueden consultar preguntas por década.  
-* Los errores de carga se gestionan adecuadamente.  
-* Existen tests.  
-* El repositorio no contiene lógica de selección del quiz diario.
+**Description**
 
-**Dependencies**
+Create the static, versioned question bank and the mechanism for loading and validating it.
 
-Issues 2 y 3\.
+**Acceptance criteria**
 
-**Agent Instructions**
+- The initial bank contains 500 questions across the five agreed categories.
+- The category counts match the product scope.
+- Questions use stable identifiers and the agreed data schema.
+- Content is separated from presentation and supports localization.
+- Invalid content is detected by automated validation.
+- The bank can be loaded without a backend or network connection.
+- A bank version is available for future schema and content evolution.
 
-Mantén el repositorio centrado exclusivamente en acceso al contenido. No implementes aquí la selección diaria ni reglas de negocio.
+**Dependencies:** R05.
+
+## R07 — Implement deterministic daily question selection
+
+**Description**
+
+Implement the selection algorithm that generates the five-question daily quiz.
+
+**Acceptance criteria**
+
+- Every daily quiz contains exactly five questions.
+- Selection is deterministic for the same date, bank version, and relevant configuration.
+- The selection mixes categories and decades according to the agreed rules.
+- The algorithm avoids duplicate questions within a quiz.
+- The algorithm handles bank changes and insufficient eligible content explicitly.
+- Tests verify determinism, uniqueness, and distribution constraints.
+- Time-zone and date-boundary behavior is explicitly tested.
+
+**Dependencies:** R05, R06.
+
+## R08 — Implement quiz execution and scoring
+
+**Description**
+
+Implement the domain logic for answering questions, tracking progress, and calculating quiz results.
+
+**Acceptance criteria**
+
+- A quiz follows a well-defined question sequence.
+- An answer cannot be submitted more than once for the same question.
+- Correct and incorrect answers are recorded accurately.
+- The score is calculated consistently.
+- Question explanations can be associated with the result of each answer.
+- Completion is distinguishable from an in-progress session.
+- Domain tests cover normal operation and invalid state transitions.
+
+**Dependencies:** R05, R07.
 
 ---
 
-**Issue 6 — Implementar generador determinista del quiz diario**
+# 7. Epic E03 — Local Persistence and Progress
 
-**Status**
+**Objective:** Persist quiz progress and results locally so that the application works without accounts or backend services.
 
-Completed on 2026-10-23. GitHub Issue #17 was closed after PR #18 was merged into `main` (merge commit `e734064bf2dbb88531e94e9259f2f7dc0bed2de7`).
-
-**Title**
-
-Game: Implementar selección determinista del quiz diario
+## R09 — Implement local storage and repository persistence
 
 **Description**
 
-Crear DailyQuizGenerator.
+Implement the persistence mechanism and repository abstractions required for local application data.
 
-El generador debe seleccionar exactamente cinco preguntas utilizando:
+**Acceptance criteria**
 
-* fecha local  
-* versión del banco  
-* banco de preguntas
+- The application can persist and reload the data required by the domain.
+- Storage implementation details remain outside presentation widgets.
+- Repository contracts can be tested using in-memory or fake implementations.
+- Stored data has a defined schema and migration strategy appropriate to V0.1.
+- Storage failures are handled without silently corrupting progress.
+- No backend or account dependency is introduced.
 
-La misma combinación de fecha y versión debe producir siempre la misma selección.
+**Dependencies:** R04, R05.
 
-Debe existir una mezcla razonable de categorías y décadas.
+## R10 — Persist daily quiz completion and results
 
-No debe repetirse una pregunta dentro del mismo quiz.
+**Description**
 
-**Acceptance Criteria**
+Persist daily quiz sessions and completed results, including the date, answers, and score.
 
-* Siempre se seleccionan 5 preguntas cuando existe suficiente contenido.  
-* No existen duplicados dentro del quiz.  
-* Misma fecha \+ misma versión → mismo resultado.  
-* Cambiar la fecha puede producir un resultado diferente.  
-* Cambiar la versión del banco puede producir un resultado diferente.  
-* La selección no depende de un RNG no determinista.  
-* Existe una estrategia explícita para mezclar categorías.  
-* Existe una estrategia explícita para mezclar décadas.  
-* El algoritmo está cubierto por tests.  
-* El algoritmo no depende de la UI.  
-* El algoritmo no necesita backend.
+**Acceptance criteria**
 
-**Dependencies**
+- A completed daily quiz remains completed after an application restart.
+- The saved result contains sufficient information to reconstruct the user's historical result.
+- Reopening the application does not accidentally reset a completed quiz.
+- In-progress behavior is explicitly defined and consistently implemented.
+- Duplicate completion records are prevented.
+- Tests cover persistence, application restart scenarios, and date boundaries.
 
-Issue 5\.
+**Dependencies:** R08, R09.
 
-**Agent Instructions**
+## R11 — Implement statistics, streaks, and history
 
-Este es uno de los componentes más importantes del proyecto. Hazlo completamente determinista y fácilmente testeable. Documenta el algoritmo utilizado. No optimices prematuramente.
+**Description**
+
+Implement the local progress data and calculations required for statistics, consecutive-day streaks, and historical results.
+
+**Acceptance criteria**
+
+- Completed quizzes can be listed chronologically.
+- Statistics are calculated from persisted results.
+- Streak calculation follows a documented rule for consecutive local calendar days.
+- Missed days and date boundaries are handled consistently.
+- Statistics remain correct after application restart.
+- Tests cover first completion, consecutive days, missed days, and historical data.
+
+**Dependencies:** R09, R10.
 
 ---
 
-**Issue 7 — Implementar scoring**
+# 8. Epic E04 — Application Services
 
-**Title**
+**Objective:** Define the required service boundaries and prepare the advertising integration without introducing actual advertising in V0.1.
 
-Game: Implementar sistema de puntuación
+## R12 — Wire application dependencies and repositories
 
 **Description**
 
-Implementar la lógica que calcula el resultado de un quiz.
+Connect the domain, repositories, persistence, and application-level services through the composition root.
 
-Debe calcular:
+**Acceptance criteria**
 
-* aciertos  
-* errores  
-* puntuación  
-* porcentaje  
-* detalle de cada respuesta
+- Application components receive dependencies through the agreed mechanism.
+- Business logic does not instantiate infrastructure implementations directly.
+- Test environments can replace production dependencies.
+- Application startup and dependency initialization are covered by appropriate tests.
+- No competing dependency-injection framework is introduced.
 
-La puntuación debe ser independiente de la UI.
+**Dependencies:** R04, R09.
 
-**Acceptance Criteria**
+## R13 — Introduce the advertising service abstraction
 
-* Se pueden evaluar las cinco preguntas.  
-* Se contabilizan correctamente los aciertos.  
-* Se contabilizan correctamente los errores.  
-* Se calcula porcentaje.  
-* Se genera un resultado de dominio.  
-* No se puede contabilizar dos veces la misma respuesta.  
-* Existen tests para 0/5, 1/5, 2/5, 3/5, 4/5 y 5/5.  
-* La lógica no depende de Flutter UI.
+**Description**
 
-**Dependencies**
+Define an advertising service boundary that allows future monetization without coupling the application to an advertising SDK.
 
-Issue 2\.
+**Acceptance criteria**
 
-**Agent Instructions**
+- The advertising service contract is defined.
+- A no-op implementation is used in V0.1.
+- No AdMob SDK or active ad delivery is introduced.
+- The application works when advertising is unavailable or disabled.
+- Future implementations can be added without changing quiz domain logic.
+- Tests verify that the no-op service does not interfere with gameplay.
 
-Mantén la lógica sencilla. No introduzcas multiplicadores, puntos especiales ni gamificación adicional que no esté definida en la especificación.
+**Dependencies:** R04, R12.
 
 ---
 
-**Issue 8 — Implementar fechas y rachas**
+# 9. Epic E05 — User Interface and Daily Experience
 
-**Title**
+**Objective:** Deliver the complete user-facing daily quiz experience, including results, progress, and sharing.
 
-Game: Implementar gestión de fechas y rachas
+## R14 — Implement application navigation and home screen
 
 **Description**
 
-Implementar la lógica responsable del día actual y de las rachas.
+Create the main navigation structure and home screen for the daily quiz application.
 
-Debe determinar:
+**Acceptance criteria**
 
-* si el quiz de hoy ya se completó  
-* si el usuario jugó ayer  
-* si continúa la racha  
-* cuándo se rompe  
-* cuál es la racha actual  
-* cuál es la mejor racha
+- The home screen reflects whether today's quiz is available, in progress, or completed.
+- The user can access the daily quiz and historical results.
+- Navigation follows the shared design system.
+- All user-facing text is localized.
+- Loading, empty, and error states are handled.
+- Widget tests cover primary navigation and home-screen states.
 
-La lógica debe utilizar fecha local y estar aislada de la UI.
+**Dependencies:** R03, R04, R07, R10.
 
-**Acceptance Criteria**
+## R15 — Implement the daily quiz interface
 
-* Primer quiz → racha 1\.  
-* Completar un quiz al día siguiente → incrementa la racha.  
-* Saltarse un día → rompe la racha.  
-* Repetir comprobaciones del mismo día no altera la racha.  
-* Se distingue correctamente entre hoy y ayer.  
-* Se gestionan cambios de fecha.  
-* Existen tests exhaustivos.  
-* Los tests permiten controlar la fecha actual mediante una abstracción.  
-* No se utilizan directamente llamadas a reloj del sistema en la lógica testeable.
+**Description**
 
-**Dependencies**
+Implement the question and answer interface for the five-question daily quiz.
 
-Issue 2\.
+**Acceptance criteria**
 
-**Agent Instructions**
+- The interface presents one question at a time.
+- All four answer options are displayed and selectable.
+- Answer submission and progress follow the domain state.
+- The interface handles correct and incorrect answers consistently.
+- Question explanations are displayed according to the agreed game flow.
+- The user cannot submit duplicate answers or skip required transitions.
+- Layouts remain usable on common mobile screen sizes.
+- Widget tests cover the principal quiz states.
 
-Presta especial atención a timezone y medianoche. No bases los tests en la fecha real del sistema. Utiliza una abstracción de reloj/fecha que pueda sustituirse durante los tests.
+**Dependencies:** R03, R08, R14.
+
+## R16 — Implement the quiz results screen
+
+**Description**
+
+Present the completed quiz result, score, and relevant feedback.
+
+**Acceptance criteria**
+
+- The result screen shows the final score.
+- Completion is persisted before the application treats the quiz as completed.
+- The user can access the information defined by the result experience.
+- The result remains consistent with the saved session.
+- Error states during persistence are handled explicitly.
+- Widget tests verify result rendering and navigation.
+
+**Dependencies:** R10, R14, R15.
+
+## R17 — Implement progress statistics and history screens
+
+**Description**
+
+Expose the statistics, streaks, and historical results available from local persistence.
+
+**Acceptance criteria**
+
+- The user can view previous quiz results.
+- The user can view the supported aggregate statistics and current streak.
+- Empty history is handled clearly.
+- Displayed values agree with the domain calculations.
+- Dates and other localized values use the selected locale.
+- Widget tests cover empty, populated, and edge-case states.
+
+**Dependencies:** R11, R14.
+
+## R18 — Implement result sharing
+
+**Description**
+
+Allow users to share their daily quiz result using the platform's available sharing mechanism.
+
+**Acceptance criteria**
+
+- The user can invoke sharing from the result experience.
+- The shared text contains the supported result information.
+- Shared content is localized.
+- The sharing implementation is isolated behind an appropriate boundary where useful.
+- Cancellation or unavailability of the sharing mechanism does not corrupt quiz state.
+- Tests cover result formatting and the relevant failure behavior.
+
+**Dependencies:** R16.
+
+## R19 — Implement onboarding and first-use experience
+
+**Description**
+
+Provide a lightweight first-use experience that explains the daily quiz and how it works.
+
+**Acceptance criteria**
+
+- The application explains the essential gameplay without requiring an account.
+- The onboarding experience follows the product's modern retro visual direction.
+- All text is localized.
+- Onboarding completion or dismissal behaves consistently across application restarts.
+- Returning users are not unnecessarily shown the initial onboarding again.
+- Tests cover first launch and subsequent launches.
+
+**Dependencies:** R03, R09, R14.
 
 ---
 
-**Issue 9 — Implementar almacenamiento local**
+# 10. Epic E06 — Quality and Reliability
 
-**Title**
+**Objective:** Verify the integrity of the content, reliability of the core experience, and accessibility of the application.
 
-Data: Implementar persistencia local
+## R20 — Establish automated quality gates
 
 **Description**
 
-Implementar la primera solución de persistencia local de la aplicación.
+Provide a repeatable verification workflow for Flutter formatting, static analysis, unit tests, and widget tests.
 
-Debe permitir almacenar como mínimo:
+**Acceptance criteria**
 
-* quizzes completados  
-* puntuación  
-* fecha  
-* racha  
-* estadísticas  
-* histórico básico
+- The required verification commands are documented.
+- Formatting and static analysis can be run consistently.
+- Relevant automated tests run through the agreed development workflow.
+- Failures are reported accurately.
+- Existing tests are not weakened to make verification pass.
+- The workflow is suitable for future CI integration.
 
-La tecnología concreta debe mantenerse encapsulada.
+**Dependencies:** R01.
 
-**Acceptance Criteria**
+## R21 — Validate question content and gameplay invariants
 
-* Los datos sobreviven al reinicio de la aplicación.  
-* Se puede guardar el resultado diario.  
-* Se puede recuperar el resultado.  
-* Se puede almacenar la racha.  
-* Se pueden almacenar estadísticas.  
-* Se puede recuperar histórico básico.  
-* La lógica de juego no depende directamente de la implementación de almacenamiento.  
-* Existe una estrategia razonable de versionado/migración del almacenamiento.  
-* Existen tests.
+**Description**
 
-**Dependencies**
+Provide automated validation for the question bank and the most important gameplay invariants.
 
-Issue 2\.
+**Acceptance criteria**
 
-**Agent Instructions**
+- The question bank is checked for duplicate identifiers.
+- Every question has four distinct answer options.
+- Exactly one answer is correct.
+- Required localized fields and explanations are validated.
+- Category counts and total question count are verified.
+- Daily selection and scoring invariants are covered by tests.
+- Invalid content causes a clear, actionable validation failure.
 
-Escoge una solución local sencilla y apropiada para el volumen de datos. No introduzcas una base de datos compleja si no es necesaria. Mantén la implementación sustituible.
+**Dependencies:** R06, R07, R08.
+
+## R22 — Verify accessibility, resilience, and platform behavior
+
+**Description**
+
+Verify usability and reliability across supported mobile platforms and common failure scenarios.
+
+**Acceptance criteria**
+
+- Primary flows support reasonable text scaling and accessibility labels.
+- Touch targets and visual contrast are reviewed.
+- Layout behavior is checked on common screen sizes.
+- Local storage and sharing failures produce understandable outcomes.
+- Critical flows are verified on Android and iOS.
+- Relevant integration or widget tests cover important end-to-end scenarios.
+- No network connectivity is required for core gameplay.
+
+**Dependencies:** R09, R14, R15, R16.
 
 ---
 
-**Issue 10 — Implementar ProgressRepository**
+# 11. Epic E07 — Documentation and Release
 
-**Title**
+**Objective:** Keep project documentation aligned with the implementation and establish a repeatable V0.1 release process.
 
-Data: Implementar ProgressRepository
+## R23 — Complete architecture and developer documentation
 
 **Description**
 
-Crear el repositorio de alto nivel que encapsule el progreso del jugador.
+Document the implemented architecture, major component boundaries, development workflow, and verification commands.
 
-Debe proporcionar operaciones similares a:
+**Acceptance criteria**
 
-getTodayProgress()
+- `docs/product.md` reflects the agreed product scope.
+- `docs/architecture.md` reflects the implemented architecture.
+- `docs/roadmap.md` reflects the current plan and status.
+- Setup, testing, and build instructions are documented.
+- Configuration and dependency decisions are documented where relevant.
+- Documentation does not claim functionality that has not been implemented.
 
-saveQuizResult()
+**Dependencies:** R01, R04, R12.
 
-getStatistics()
+## R24 — Prepare Android and iOS release configuration
 
-getCurrentStreak()
+**Description**
 
-getHistory()
+Review the platform-specific configuration needed to build and distribute the initial version.
 
-Debe combinar la persistencia con los modelos de dominio sin exponer detalles internos de almacenamiento.
+**Acceptance criteria**
 
-**Acceptance Criteria**
+- Android and iOS application identifiers and required metadata are reviewed.
+- Display name, launcher icons, and required assets are configured.
+- Versioning and build configuration are documented.
+- Platform permissions are limited to those required by the application.
+- Release build commands are documented.
+- Platform-specific configuration does not introduce unnecessary permissions or services.
 
-* Existe ProgressRepository.  
-* Se puede consultar el progreso de hoy.  
-* Se puede guardar un resultado.  
-* Se pueden consultar estadísticas.  
-* Se puede consultar la racha.  
-* Se puede consultar histórico.  
-* No se expone la implementación concreta del almacenamiento.  
-* Existen tests.  
-* Guardar dos veces el mismo quiz no duplica estadísticas.
+**Dependencies:** R14, R19.
 
-**Dependencies**
+## R25 — Execute end-to-end release verification
 
-Issues 8 y 9\.
+**Description**
 
-**Agent Instructions**
+Perform the final V0.1 verification against the agreed product requirements.
 
-El repositorio debe convertirse en el único punto de acceso al progreso desde las capas superiores. Evita que las pantallas manipulen directamente almacenamiento.
+**Acceptance criteria**
+
+- A new user can launch the application and complete onboarding.
+- The daily quiz presents five questions and produces the expected result.
+- Quiz completion persists across application restarts.
+- Statistics, streaks, and history reflect persisted results.
+- Result sharing works on supported platforms.
+- Localization defaults to `es-ES`.
+- Core gameplay works without an account, backend, analytics, or advertising.
+- Relevant automated tests, static analysis, and platform builds pass.
+- Known limitations are documented.
+
+**Dependencies:** R15, R16, R17, R18, R19, R20, R21, R22, R24.
+
+## R26 — Finalize V0.1 release documentation and handover
+
+**Description**
+
+Prepare the release notes and document the final state of the first version.
+
+**Acceptance criteria**
+
+- Release notes describe the implemented functionality and known limitations.
+- Version and build information are consistent.
+- Required setup and release documentation is complete.
+- Remaining work is recorded as future roadmap scope rather than presented as completed functionality.
+- The release readiness summary identifies verification performed and any outstanding non-blocking issues.
+
+**Dependencies:** R23, R25.
 
 ---
 
-**Issue 11 — Tests de persistencia y recuperación**
+# 12. Dependency overview
 
-**Title**
+The following is the intended high-level order. It is not a requirement to execute every item strictly sequentially.
 
-Tests: Validar persistencia y recuperación del progreso
+| Phase | Main work | Depends primarily on |
+|---|---|---|
+| 1 | R01–R04: Foundation | None |
+| 2 | R05–R08: Domain, content, game engine | Foundation |
+| 3 | R09–R13: Persistence and services | Domain and foundation |
+| 4 | R14–R19: User experience | Game engine, persistence, shared UI |
+| 5 | R20–R22: Quality | Relevant implementation work |
+| 6 | R23–R24: Documentation and platform preparation | Foundation and application flows |
+| 7 | R25–R26: Final verification and release | Feature completion and quality gates |
 
-**Description**
+The coordinator must check the individual dependencies before starting each item. The phase table does not replace the dependency lists in the Issues.
 
-Crear una batería de tests específica para garantizar que los datos del jugador se mantienen correctamente.
+# 13. Parallel execution guidelines
 
-**Acceptance Criteria**
+Parallel work is permitted when the relevant requirements are clear and the tasks do not compete for the same files or interfaces.
 
-* Guardar y recuperar un resultado.  
-* Reiniciar/recrear el repositorio y recuperar datos.  
-* Recuperar quiz completado.  
-* Recuperar estadísticas.  
-* Recuperar racha.  
-* Recuperar histórico.  
-* Manejar ausencia de datos.  
-* Evitar duplicados.  
-* Cubrir migración/versionado si aplica.
+Potentially independent work includes:
 
-**Dependencies**
+- Localization foundations and dependency-composition conventions after the project structure is established.
+- Question-bank validation and independent test infrastructure after the question schema is agreed.
+- Documentation updates and platform preparation once their respective interfaces are stable.
+- Independent UI components after their domain contracts are established.
 
-Issue 10\.
+Work that must respect dependency ordering includes:
 
-**Agent Instructions**
+- Question-bank implementation before final bank validation.
+- Daily selection before the UI can consume the complete selection flow.
+- Persistence contracts before dependent result-history functionality is implemented.
+- Quiz execution and completion persistence before final result behavior is verified.
+- Implementation and verification before the relevant Issue is considered complete.
 
-No cambies la arquitectura para facilitar los tests. Si encuentras problemas de diseño, documéntalos y realiza únicamente cambios necesarios para hacer el comportamiento correcto y testeable.
+When parallel work is selected, the coordinator must ensure that each developer has a clearly bounded scope, that shared contracts are agreed upon, and that integration is verified before dependent work proceeds.
 
----
+# 14. Definition of done
 
-**Issue 12 — Crear abstracción AdService**
+A roadmap item is complete only when:
 
-**Title**
+- Its GitHub Issue acceptance criteria are satisfied.
+- Relevant automated tests exist and pass.
+- Formatting and static analysis pass.
+- Changes have been reviewed.
+- Blocking review findings have been resolved.
+- User-facing text is localized.
+- Documentation is updated when required.
+- The Issue and Pull Request reflect the actual state.
+- Commits and GitHub artifacts are written in English.
+- No unverified action is reported as completed.
 
-Services: Crear abstracción AdService
+The V0.1 roadmap is complete when R25 and R26 are satisfied and the application meets the agreed product scope.
 
-**Description**
+# 15. Coordinator operating instructions
 
-Crear una abstracción para publicidad que permita incorporar Google AdMob posteriormente sin modificar la lógica principal del juego.
+At the beginning of a roadmap execution session:
 
-La aplicación V0.1 no debe utilizar ningún SDK publicitario.
+1. Read this document, `AGENTS.md`, `docs/product.md`, and `docs/architecture.md`.
+2. Inspect the repository, GitHub state, existing Issues, and open Pull Requests.
+3. Reconcile the roadmap with work that has already been completed.
+4. Identify the next eligible roadmap item.
+5. Delegate analysis, create the required GitHub hierarchy incrementally, and begin implementation only when requirements are ready.
 
-La interfaz debe contemplar las necesidades previsibles sin acoplarse a AdMob.
+After each completed item:
 
-**Acceptance Criteria**
+1. Record the actual outcome and verification evidence.
+2. Update the corresponding Issue and Pull Request.
+3. Update this roadmap if the item's status or dependencies changed.
+4. Reassess which items are eligible for execution.
+5. Continue automatically unless a material decision, authorization, or blocking dependency requires user input.
 
-* Existe AdService.  
-* La interfaz no contiene tipos específicos de AdMob.  
-* La lógica de juego puede depender de AdService.  
-* No se añade dependencia de AdMob.  
-* No se inicializa ninguna publicidad.  
-* La interfaz permite implementar posteriormente publicidad sin modificar el dominio.
+Do not create duplicate Epics or Issues. Reuse existing GitHub objects when they represent the same work, and preserve their history and links.
 
-**Dependencies**
-
-Issue 1\.
-
-**Agent Instructions**
-
-No sobre-diseñes la API. Define únicamente las operaciones necesarias para la aplicación actual y las que sean razonablemente necesarias para una futura implementación de AdMob.
-
----
-
-**Issue 13 — Implementar NoOpAdService**
-
-**Title**
-
-Services: Implementar NoOpAdService
-
-**Description**
-
-Crear la implementación por defecto de AdService.
-
-Durante V0.1 no debe mostrar publicidad ni cargar SDKs.
-
-**Acceptance Criteria**
-
-* Existe NoOpAdService.  
-* Implementa completamente AdService.  
-* Todas las operaciones son seguras aunque no hagan nada.  
-* No se carga AdMob.  
-* La aplicación utiliza NoOpAdService por defecto.  
-* Existen tests básicos.
-
-**Dependencies**
-
-Issue 12\.
-
-**Agent Instructions**
-
-No añadas placeholders visuales de anuncios salvo que sean necesarios para probar layout. El comportamiento por defecto debe ser completamente silencioso.
-
----
-
-**Issue 14 — Crear sistema visual retro moderno**
-
-**Title**
-
-UI: Crear tema visual retro moderno
-
-**Description**
-
-Crear el sistema visual inicial de **¿Cuánto recuerdas?**.
-
-El estilo debe ser:
-
-* retro moderno  
-* atractivo  
-* sencillo  
-* legible  
-* orientado a sesiones cortas
-
-Crear tema y componentes reutilizables.
-
-**Acceptance Criteria**
-
-* Existe tema global.  
-* Se definen colores principales.  
-* Se define tipografía.  
-* Se definen estilos de botones.  
-* Se definen cards.  
-* Se definen estados de respuesta correcta/incorrecta.  
-* Se mantienen espaciados coherentes.  
-* Se contempla accesibilidad básica.  
-* Funciona correctamente en diferentes tamaños de pantalla.  
-* No se duplica styling innecesariamente entre pantallas.
-
-**Dependencies**
-
-Issue 1\.
-
-**Agent Instructions**
-
-No implementes todavía el flujo completo del juego. Crea los componentes y el tema necesarios para que otros agentes puedan construir las pantallas encima.
-
----
-
-**Issue 15 — Implementar Home**
-
-**Title**
-
-UI: Implementar pantalla principal
-
-**Description**
-
-Crear la pantalla principal de la aplicación.
-
-Debe mostrar:
-
-* identidad de la aplicación  
-* estado del quiz de hoy  
-* botón para jugar  
-* racha  
-* acceso a estadísticas
-
-Si el quiz ya está completado debe indicarlo claramente.
-
-**Acceptance Criteria**
-
-* Home se muestra al iniciar.  
-* Se muestra correctamente el estado del quiz.  
-* El botón "Jugar" inicia el quiz cuando corresponde.  
-* Un quiz completado no puede iniciarse accidentalmente de nuevo.  
-* Se muestra la racha.  
-* Existe acceso a estadísticas.  
-* La pantalla utiliza el tema global.  
-* No contiene lógica de selección del quiz.  
-* No accede directamente a almacenamiento.
-
-**Dependencies**
-
-Issues 6, 10 y 14\.
-
-**Agent Instructions**
-
-La pantalla debe consumir casos de uso/repositorios, no implementar reglas de negocio. Mantén el widget relativamente fino.
-
----
-
-**Issue 16 — Implementar pantalla de quiz**
-
-**Title**
-
-UI: Implementar pantalla del quiz diario
-
-**Description**
-
-Crear el flujo de preguntas del quiz diario.
-
-Cada pregunta debe mostrar:
-
-* progreso 1/5  
-* pregunta  
-* cuatro respuestas
-
-Tras seleccionar una respuesta:
-
-* indicar correcto/incorrecto  
-* mostrar explicación  
-* permitir continuar
-
-No se debe poder responder dos veces a una pregunta.
-
-**Acceptance Criteria**
-
-* Se muestran las cinco preguntas.  
-* Se muestra progreso.  
-* Se muestran exactamente cuatro respuestas.  
-* La respuesta seleccionada queda registrada.  
-* Se muestra feedback.  
-* Se muestra explicación.  
-* Una pregunta no puede responderse dos veces.  
-* El usuario puede avanzar a la siguiente.  
-* Tras la quinta pregunta se genera el resultado.  
-* No se puede saltar una pregunta.  
-* El flujo funciona sin backend.
-
-**Dependencies**
-
-Issues 6, 7 y 14\.
-
-**Agent Instructions**
-
-No implementes el algoritmo de selección ni scoring dentro del widget. Consume los servicios/casos de uso definidos por dominio.
-
----
-
-**Issue 17 — Implementar pantalla de resultados**
-
-**Title**
-
-UI: Implementar pantalla de resultados
-
-**Description**
-
-Crear la pantalla mostrada después de completar el quiz.
-
-Debe mostrar:
-
-* puntuación  
-* aciertos  
-* porcentaje  
-* racha  
-* resumen de respuestas  
-* botón compartir  
-* navegación a Home
-
-**Acceptance Criteria**
-
-* Se muestran correctamente los resultados.  
-* Se muestra la puntuación.  
-* Se muestran los aciertos.  
-* Se muestra porcentaje.  
-* Se muestra la racha actual.  
-* Se muestra resumen de respuestas.  
-* Se puede volver a Home.  
-* Se puede iniciar el flujo de compartir.  
-* El resultado mostrado coincide con el resultado persistido.
-
-**Dependencies**
-
-Issues 7, 8, 10 y 14\.
-
-**Agent Instructions**
-
-No recalcules el resultado en la UI. La pantalla debe recibir un QuizResult ya calculado.
-
----
-
-**Issue 18 — Implementar estadísticas**
-
-**Title**
-
-UI: Implementar pantalla de estadísticas
-
-**Description**
-
-Crear la pantalla de estadísticas básicas.
-
-Mostrar:
-
-* quizzes completados  
-* preguntas respondidas  
-* aciertos  
-* porcentaje global  
-* mejor puntuación  
-* racha actual  
-* mejor racha
-
-**Acceptance Criteria**
-
-* Todas las estadísticas se muestran correctamente.  
-* Los valores proceden del repositorio.  
-* Se actualizan después de completar un quiz.  
-* Se contempla el estado sin datos.  
-* La pantalla no accede directamente al almacenamiento.  
-* El diseño sigue el tema visual.
-
-**Dependencies**
-
-Issues 10 y 14\.
-
-**Agent Instructions**
-
-No añadas gráficas complejas en V0.1. El objetivo es proporcionar una visión rápida y clara del progreso.
-
----
-
-**Issue 19 — Implementar compartir resultado**
-
-**Title**
-
-UI: Implementar compartir resultado
-
-**Description**
-
-Implementar la funcionalidad de compartir el resultado mediante el mecanismo nativo de Android/iOS.
-
-El texto debe generarse dinámicamente.
-
-Ejemplo:
-
-🧠 ¿Cuánto recuerdas?  
- Hoy he conseguido 4/5.  
- 🔥 Racha: 7 días  
- ¿Tú cuánto recuerdas?
-
-**Acceptance Criteria**
-
-* Existe botón de compartir.  
-* Se utiliza el mecanismo nativo de sharing.  
-* El texto contiene la puntuación.  
-* El texto contiene la racha.  
-* El texto se genera dinámicamente.  
-* Funciona en Android.  
-* Funciona en iOS.  
-* No se introduce dependencia de backend.
-
-**Dependencies**
-
-Issue 17\.
-
-**Agent Instructions**
-
-Mantén la generación del texto separada del widget para poder modificar posteriormente el formato de compartir sin tocar la pantalla.
-
----
-
-**Issue 20 — Tests unitarios del motor del juego**
-
-**Title**
-
-Tests: Cubrir motor de selección y puntuación
-
-**Description**
-
-Crear una suite completa de tests para el núcleo del juego.
-
-Debe cubrir especialmente el generador determinista y el scoring.
-
-**Acceptance Criteria**
-
-* Misma fecha/version produce mismo quiz.  
-* Diferentes fechas producen selecciones diferentes cuando existe suficiente banco.  
-* Diferentes versiones pueden producir selecciones diferentes.  
-* Nunca hay duplicados.  
-* Se seleccionan exactamente cinco preguntas.  
-* Se respetan las restricciones de categorías.  
-* Se respetan las restricciones de décadas.  
-* Scoring 0/5.  
-* Scoring 1/5.  
-* Scoring 2/5.  
-* Scoring 3/5.  
-* Scoring 4/5.  
-* Scoring 5/5.  
-* Se cubren casos límite.
-
-**Dependencies**
-
-Issues 6 y 7\.
-
-**Agent Instructions**
-
-Prioriza tests deterministas y reproducibles. Si detectas que el diseño actual dificulta testear una regla, mejora la testabilidad sin introducir complejidad innecesaria.
-
----
-
-**Issue 21 — Tests de fechas y rachas**
-
-**Title**
-
-Tests: Cubrir fechas, progreso diario y rachas
-
-**Description**
-
-Crear una batería exhaustiva de tests para garantizar que la lógica temporal es correcta.
-
-**Acceptance Criteria**
-
-* Primer quiz genera racha 1\.  
-* Dos días consecutivos generan racha 2\.  
-* Tres días consecutivos generan racha 3\.  
-* Saltar un día rompe la racha.  
-* Completar dos veces el mismo día no incrementa la racha.  
-* Un día sin datos se gestiona correctamente.  
-* Se actualiza correctamente la mejor racha.  
-* Se prueban cambios de medianoche.  
-* Se prueban cambios de mes.  
-* Se prueban cambios de año.  
-* Los tests no dependen del reloj real.
-
-**Dependencies**
-
-Issue 8\.
-
-**Agent Instructions**
-
-Esta suite debe detectar regresiones relacionadas con fechas. Utiliza un reloj inyectable/falso en lugar de modificar fechas reales del sistema.
-
----
-
-**Issue 22 — Tests de integración del flujo completo**
-
-**Title**
-
-Tests: Cubrir flujo completo del quiz diario
-
-**Description**
-
-Crear tests de integración para comprobar el flujo completo:
-
-Home
-
- ↓
-
-Jugar
-
- ↓
-
-5 preguntas
-
- ↓
-
-Resultado
-
- ↓
-
-Persistencia
-
- ↓
-
-Home
-
-**Acceptance Criteria**
-
-* El usuario puede iniciar el quiz.  
-* Puede responder cinco preguntas.  
-* Se genera correctamente el resultado.  
-* El resultado se persiste.  
-* La racha se actualiza.  
-* Home reconoce que el quiz ya está completado.  
-* El estado permanece después de recrear la aplicación/repositorios.  
-* Las estadísticas reflejan el quiz completado.
-
-**Dependencies**
-
-Issues 15, 16, 17 y 10\.
-
-**Agent Instructions**
-
-No sustituyas toda la lógica por mocks. Utiliza mocks/fakes únicamente donde sea apropiado y verifica el flujo real entre las principales capas.
-
----
-
-**Issue 23 — Configurar identidad y metadata de la aplicación**
-
-**Title**
-
-Release: Configurar nombre, icono, splash y metadata
-
-**Description**
-
-Preparar la identidad de **¿Cuánto recuerdas?** para Android e iOS.
-
-Debe incluir:
-
-* nombre  
-* icono  
-* splash screen  
-* identificadores de aplicación  
-* versión inicial  
-* metadata básica
-
-**Acceptance Criteria**
-
-* El nombre aparece correctamente en Android.  
-* El nombre aparece correctamente en iOS.  
-* Icono configurado.  
-* Splash configurado.  
-* Versionado inicial configurado.  
-* Package/bundle identifiers coherentes.  
-* No existen nombres temporales de plantilla Flutter.
-
-**Dependencies**
-
-Issue 1\.
-
-**Agent Instructions**
-
-No configures todavía publicación en stores ni certificados reales. Deja preparada la estructura para ello.
-
----
-
-**Issue 24 — Configurar build Android**
-
-**Title**
-
-Release: Preparar build Android
-
-**Description**
-
-Preparar el proyecto para generar una versión Android distribuible.
-
-Debe contemplar:
-
-* debug  
-* release  
-* APK  
-* AAB  
-* configuración de signing preparada
-
-**Acceptance Criteria**
-
-* Debug funciona.  
-* Release compila.  
-* Se puede generar APK.  
-* Se puede generar AAB.  
-* La configuración de signing no contiene secretos en el repositorio.  
-* Los identificadores son correctos.  
-* Se documenta cómo generar el build.
-
-**Dependencies**
-
-Issue 23\.
-
-**Agent Instructions**
-
-No introduzcas credenciales reales. Utiliza configuración segura y documenta qué secretos/certificados deberá proporcionar posteriormente el propietario del proyecto.
-
----
-
-**Issue 25 — Configurar build iOS**
-
-**Title**
-
-Release: Preparar build iOS
-
-**Description**
-
-Preparar el proyecto para compilar correctamente en iOS.
-
-Debe incluir:
-
-* configuración iOS  
-* bundle identifier  
-* build de desarrollo  
-* simulador  
-* preparación para distribución
-
-**Acceptance Criteria**
-
-* El proyecto compila en iOS.  
-* Funciona en simulador.  
-* Bundle identifier configurado.  
-* Nombre de aplicación correcto.  
-* Versionado configurado.  
-* No se incluyen certificados privados.  
-* Se documentan los pasos necesarios para distribución.
-
-**Dependencies**
-
-Issue 23\.
-
-**Agent Instructions**
-
-No intentes resolver credenciales Apple del propietario. El objetivo es dejar el proyecto técnicamente preparado.
-
----
-
-**Issue 26 — Documentación técnica final**
-
-**Title**
-
-Documentation: Documentar arquitectura y desarrollo
-
-**Description**
-
-Crear documentación técnica suficiente para que otro desarrollador/agente pueda continuar el proyecto sin depender del contexto de este chat.
-
-Debe documentar:
-
-* arquitectura  
-* estructura de carpetas  
-* ejecución local  
-* tests  
-* formato del banco JSON  
-* generación del quiz  
-* determinismo  
-* persistencia  
-* estadísticas  
-* rachas  
-* AdService  
-* cómo añadir nuevas preguntas  
-* cómo sustituir NoOpAdService por AdMob
-
-**Acceptance Criteria**
-
-* Existe documentación de arquitectura.  
-* Existe documentación para ejecutar el proyecto.  
-* Existe documentación para ejecutar tests.  
-* Se documenta el formato JSON.  
-* Se documenta el algoritmo de selección.  
-* Se documenta la lógica de fechas/rachas.  
-* Se documenta la persistencia.  
-* Se documenta la arquitectura de publicidad.  
-* Se explica cómo añadir preguntas.  
-* Se explica cómo incorporar AdMob posteriormente.  
-* La documentación no contiene información sensible.
-
-**Dependencies**
-
-Issues 1–25, o al menos todos los componentes que finalmente hayan sido implementados.
-
-**Agent Instructions**
-
-Documenta el comportamiento real del código, no el comportamiento deseado. Si durante la implementación se han tomado decisiones distintas de las inicialmente previstas, refleja las decisiones finales y explica brevemente por qué.
-
+The coordinator must use the configured `issue-analyst`, `developer`, and `pr-reviewer` agents when delegation is available. If delegation is unavailable, it must report the limitation rather than falsely claiming that a specialized agent performed the work.
