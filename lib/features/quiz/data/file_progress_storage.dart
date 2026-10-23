@@ -71,9 +71,9 @@ class FileProgressStorage implements ProgressStorage {
     } on FileSystemException catch (error) {
       await _deleteTemporaryFile(temporaryFile);
       throw ProgressStorageIoException(error.message);
-    } on Object {
+    } on Object catch (error) {
       await _deleteTemporaryFile(temporaryFile);
-      rethrow;
+      throw ProgressStorageIoException('Could not save progress: $error');
     }
   }
 
