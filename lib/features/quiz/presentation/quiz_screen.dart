@@ -23,6 +23,7 @@ class _QuizScreenState extends State<QuizScreen> {
   bool _loading = true;
   String? _error;
   final List<QuizAnswer> _answers = [];
+  bool _finishing = false;
 
   @override
   void initState() {
@@ -106,6 +107,12 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Future<void> _finishQuiz() async {
     if (_quiz == null) return;
+    if (_finishing) return;
+    setState(() {
+      _finishing = true;
+      _loading = false;
+      _error = null;
+    });
     try {
       final questionsById = <String, Question>{};
       for (final question in _questions) {
@@ -124,14 +131,18 @@ class _QuizScreenState extends State<QuizScreen> {
         totalQuestions: _questions.length,
         completedAt: DateTime.now(),
       );
-      try {
-        await widget.dependencies.progressRepository.recordQuiz(result);
-      } catch (_) {}
+      await widget.dependencies.progressRepository.recordQuiz(result);
       if (!mounted) return;
+      setState(() {
+        _finishing = false;
+      });
       Navigator.of(context).pop();
-    } catch (_) {
+    } catch (e) {
       if (!mounted) return;
-      Navigator.of(context).pop();
+      setState(() {
+        _error = e.toString();
+        _finishing = false;
+      });
     }
   }
 

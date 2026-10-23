@@ -25,6 +25,16 @@ class _InMemoryStorage implements ProgressStorage {
   }
 }
 
+class _FailingStorage implements ProgressStorage {
+  @override
+  Future<StoredProgress> load() async => StoredProgress.empty();
+
+  @override
+  Future<void> save(StoredProgress progress) async {
+    throw Exception('save failed');
+  }
+}
+
 const _bankFive = '''
 {
   "schemaVersion": 1,
@@ -170,14 +180,14 @@ void main() {
     await tester.pump(const Duration(milliseconds: 100));
 
     for (var i = 0; i < 5; i++) {
+      // Find any correct answer (text 'Correcta' appears once per question in our bank)
       final correctFinder = find.text('Correcta');
       if (correctFinder.evaluate().isNotEmpty) {
         await tester.tap(correctFinder.first);
       } else {
-        // Fallback: tap first answer if localized differently
         final options = find.byType(InkWell);
         if (options.evaluate().isNotEmpty) {
-          await tester.tap(options.at(i % 4));
+          await tester.tap(options.first);
         }
       }
       await tester.pump();
@@ -196,4 +206,93 @@ void main() {
 
     expect(find.byType(QuizScreen), findsNothing);
   });
+
+  testWidgets(
+    'selecting incorrect answer shows explanation and does not close',
+    (WidgetTester tester) async {
+      final deps = await _buildDeps();
+      await tester.pumpWidget(_buildTestApp(deps));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      // Find an incorrect answer - look for 'Mal 1', 'Mal', etc.
+      final incorrectTexts = ['Mal 1', 'Mal 2', 'Mal 3', 'Mal'];
+      bool tapped = false;
+      for (final text in incorrectTexts) {
+        final finder = find.text(text);
+        if (finder.evaluate().isNotEmpty) {
+          await tester.tap(finder.first);
+          tapped = true;
+          break;
+        }
+      }
+      if (!tapped) {
+        // Tap second option
+        final options = find.byType(InkWell);
+        if (options.evaluate().length > 1) {
+          await tester.tap(options.at(1));
+          tapped = true;
+        }
+      }
+      expect(tapped, isTrue);
+      await tester.pump();
+      await tester.tap(find.text('Enviar'));
+      await tester.pump();
+
+      // Should show explanation (some explanation exists)
+      expect(find.textContaining('Explicación'), findsOneWidget);
+      expect(find.text('Siguiente'), findsOneWidget);
+      expect(find.byType(QuizScreen), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'shows error state on record failure and does not close on retry',
+    (WidgetTester tester) async {
+      final deps = await _buildDeps();
+      final failingStorage = _FailingStorage();
+      final failingProgressRepo = ProgressRepository(storage: failingStorage);
+      final failingDeps = AppDependencies(
+        questionRepository: deps.questionRepository,
+        progressStorage: failingStorage,
+        progressRepository: failingProgressRepo,
+        dailyQuizGenerator: deps.dailyQuizGenerator,
+        quizScorer: deps.quizScorer,
+        streakCalculator: deps.streakCalculator,
+        adService: deps.adService,
+      );
+      await failingDeps.initialize();
+
+      await tester.pumpWidget(_buildTestApp(failingDeps));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      for (var i = 0; i < 5; i++) {
+        final correctFinder = find.text('Correcta');
+        if (correctFinder.evaluate().isNotEmpty) {
+          await tester.tap(correctFinder.first);
+        } else {
+          final options = find.byType(InkWell);
+          if (options.evaluate().isNotEmpty) {
+            await tester.tap(options.first);
+          }
+        }
+        await tester.pump();
+        await tester.tap(find.text('Enviar'));
+        await tester.pump();
+        if (i < 4) {
+          await tester.tap(find.text('Siguiente'));
+          await tester.pump();
+        } else {
+          await tester.tap(find.text('Finalizar'));
+          await tester.pump();
+          await tester.pump();
+        }
+      }
+
+      // Should show error and not close
+      expect(find.byType(QuizScreen), findsOneWidget);
+      expect(find.text('Reintentar'), findsOneWidget);
+    },
+  );
 }
