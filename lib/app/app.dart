@@ -21,7 +21,26 @@ class CuantoRecuerdasApp extends StatelessWidget {
       supportedLocales: const [_locale],
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       theme: AppTheme.light,
-      home: const HomeScreen(),
+      initialRoute: '/',
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/':
+            return MaterialPageRoute(
+              builder: (_) => HomeScreen(dependencies: dependencies),
+            );
+          case '/quiz':
+            return MaterialPageRoute(
+              builder: (_) =>
+                  const Scaffold(body: Center(child: Text('Reto diario'))),
+            );
+          case '/history':
+            return MaterialPageRoute(
+              builder: (_) =>
+                  const Scaffold(body: Center(child: Text('Historial'))),
+            );
+        }
+        return null;
+      },
     );
   }
 }
