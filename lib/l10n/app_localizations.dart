@@ -195,6 +195,60 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Finalizar'**
   String get finishQuiz;
+
+  /// No description provided for @resultsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Resultados'**
+  String get resultsTitle;
+
+  /// No description provided for @score.
+  ///
+  /// In es, this message translates to:
+  /// **'Puntuación'**
+  String get score;
+
+  /// No description provided for @scoreFormat.
+  ///
+  /// In es, this message translates to:
+  /// **'{correct}/{total}'**
+  String scoreFormat(int correct, int total);
+
+  /// No description provided for @feedbackPerfect.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Perfecto!'**
+  String get feedbackPerfect;
+
+  /// No description provided for @feedbackGreat.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Muy bien!'**
+  String get feedbackGreat;
+
+  /// No description provided for @feedbackGood.
+  ///
+  /// In es, this message translates to:
+  /// **'Bien hecho.'**
+  String get feedbackGood;
+
+  /// No description provided for @feedbackAverage.
+  ///
+  /// In es, this message translates to:
+  /// **'Sigue practicando.'**
+  String get feedbackAverage;
+
+  /// No description provided for @feedbackPoor.
+  ///
+  /// In es, this message translates to:
+  /// **'Sigue practicando.'**
+  String get feedbackPoor;
+
+  /// No description provided for @backToHome.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver al inicio'**
+  String get backToHome;
 }
 
 class _AppLocalizationsDelegate
