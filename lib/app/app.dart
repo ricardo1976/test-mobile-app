@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../features/history/presentation/history_screen.dart';
 import '../features/home/presentation/home_screen.dart';
+import '../features/quiz/presentation/quiz_screen.dart';
 import '../l10n/app_localizations.dart';
 import 'dependencies.dart';
 import 'theme/app_theme.dart';
@@ -17,7 +18,7 @@ class CuantoRecuerdasApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '¿Cuánto recuerdas?',
+      title: '?Cu?nto recuerdas?',
       debugShowCheckedModeBanner: false,
       locale: _locale,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -35,14 +36,7 @@ class CuantoRecuerdasApp extends StatelessWidget {
             );
           case '/quiz':
             return MaterialPageRoute(
-              builder: (context) => Scaffold(
-                appBar: AppBar(
-                  title: Text(AppLocalizations.of(context)!.dailyQuiz),
-                ),
-                body: Center(
-                  child: Text(AppLocalizations.of(context)!.dailyQuiz),
-                ),
-              ),
+              builder: (_) => QuizScreen(dependencies: dependencies),
             );
           case '/history':
             return MaterialPageRoute(

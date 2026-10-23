@@ -45,7 +45,9 @@ const _bank = '''
 
 void main() {
   testWidgets('shows the home screen', (WidgetTester tester) async {
-    final questionRepository = QuestionRepository(assetLoader: () async => _bank);
+    final questionRepository = QuestionRepository(
+      assetLoader: () async => _bank,
+    );
     final storage = _InMemoryStorage();
     final progressRepository = ProgressRepository(storage: storage);
     final dependencies = AppDependencies(
