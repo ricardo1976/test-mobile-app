@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/dependencies.dart';
+import '../../../app/widgets/app_buttons.dart';
 import '../../../l10n/app_localizations.dart';
 
 enum HomeStatus { loading, available, inProgress, completed, error }
@@ -16,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   HomeStatus _status = HomeStatus.loading;
+  String? _quizId;
 
   @override
   void initState() {
@@ -26,7 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _initialize() async {
     try {
       await widget.dependencies.initialize();
-      final completed = widget.dependencies.progressRepository.completedToday();
+      final version = await widget.dependencies.questionRepository
+          .getSchemaVersion();
+      final now = DateTime.now();
+      final dateId =
+          '${now.year.toString().padLeft(4, '0')}${now.month.toString().padLeft(2, '0')}${now.day.toString().padLeft(2, '0')}';
+      _quizId = 'daily-$dateId-v$version';
+      final completed = widget.dependencies.progressRepository
+          .completedQuizToday(_quizId!);
       final inProgress =
           !completed &&
           widget.dependencies.progressRepository.inProgressToday();
@@ -71,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Text(l10n.homeLoadingError),
               const SizedBox(height: 12),
-              ElevatedButton(onPressed: _initialize, child: Text(l10n.retry)),
+              AppPrimaryButton(onPressed: _initialize, child: Text(l10n.retry)),
             ],
           ),
         );
@@ -95,12 +104,12 @@ class _HomeScreenState extends State<HomeScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            ElevatedButton(
+            AppPrimaryButton(
               onPressed: () => Navigator.of(context).pushNamed('/quiz'),
               child: Text(l10n.playDailyQuiz),
             ),
             const SizedBox(height: 12),
-            OutlinedButton(
+            AppSecondaryButton(
               onPressed: () => Navigator.of(context).pushNamed('/history'),
               child: Text(l10n.viewHistory),
             ),

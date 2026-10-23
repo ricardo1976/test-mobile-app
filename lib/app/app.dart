@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import '../features/history/presentation/history_screen.dart';
 import '../features/home/presentation/home_screen.dart';
 import '../l10n/app_localizations.dart';
 import 'dependencies.dart';
@@ -43,16 +44,9 @@ class CuantoRecuerdasApp extends StatelessWidget {
                 ),
               ),
             );
-          case '/history':
+case '/history':
             return MaterialPageRoute(
-              builder: (context) => Scaffold(
-                appBar: AppBar(
-                  title: Text(AppLocalizations.of(context)!.history),
-                ),
-                body: Center(
-                  child: Text(AppLocalizations.of(context)!.history),
-                ),
-              ),
+              builder: (_) => HistoryScreen(dependencies: dependencies),
             );
         }
         return null;
