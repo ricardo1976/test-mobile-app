@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../features/home/presentation/home_screen.dart';
+import 'dependencies.dart';
 import 'theme/app_theme.dart';
 
 class CuantoRecuerdasApp extends StatelessWidget {
-  const CuantoRecuerdasApp({super.key});
+  const CuantoRecuerdasApp({super.key, required this.dependencies});
+
+  final AppDependencies dependencies;
 
   static const Locale _locale = Locale('es', 'ES');
 
