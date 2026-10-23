@@ -14,6 +14,29 @@ import 'package:cuanto_recuerdas/features/quiz/domain/streak_calculator.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  test('create() wires and initializes the repositories', () async {
+    final tempDir = await Directory.systemTemp.createTemp('deps-create');
+    final file = File('${tempDir.path}/progress.json');
+
+    final dependencies = await AppDependencies.create(progressFile: file);
+
+    expect(dependencies.progressStorage, isA<FileProgressStorage>());
+    expect(dependencies.progressRepository, isA<ProgressRepository>());
+
+    final questions = await dependencies.questionRepository.getAllQuestions();
+    expect(questions, isNotEmpty);
+    expect(dependencies.progressRepository.progress.quizResults, isEmpty);
+  });
+
+  test('create() uses the caller-supplied progress file', () async {
+    final tempDir = await Directory.systemTemp.createTemp('deps-caller');
+    final file = File('${tempDir.path}/progress.json');
+
+    final dependencies = await AppDependencies.create(progressFile: file);
+
+    expect((dependencies.progressStorage as FileProgressStorage).file, file);
+  });
+
   test('initializes question bank and progress eagerly', () async {
     final tempDir = await Directory.systemTemp.createTemp('deps');
     final file = File('${tempDir.path}/progress.json');

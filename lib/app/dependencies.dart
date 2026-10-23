@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:path_provider/path_provider.dart';
+
 import '../features/quiz/data/file_progress_storage.dart';
 import '../features/quiz/data/progress_repository.dart';
 import '../features/quiz/data/progress_storage.dart';
@@ -31,7 +33,8 @@ class AppDependencies {
   }
 
   static Future<AppDependencies> create({File? progressFile}) async {
-    final storage = FileProgressStorage(progressFile ?? File('progress.json'));
+    final file = progressFile ?? await _defaultProgressFile();
+    final storage = FileProgressStorage(file);
     final progressRepository = ProgressRepository(storage: storage);
     final dependencies = AppDependencies(
       questionRepository: QuestionRepository(),
@@ -43,5 +46,10 @@ class AppDependencies {
     );
     await dependencies.initialize();
     return dependencies;
+  }
+
+  static Future<File> _defaultProgressFile() async {
+    final directory = await getApplicationSupportDirectory();
+    return File('${directory.path}/progress.json');
   }
 }
