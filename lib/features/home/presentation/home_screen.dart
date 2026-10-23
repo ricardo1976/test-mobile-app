@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../app/dependencies.dart';
 import '../../../l10n/app_localizations.dart';
 
-enum HomeStatus { loading, available, inProgress, completed, error, empty }
+enum HomeStatus { loading, available, inProgress, completed, error }
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.dependencies});
@@ -27,9 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       await widget.dependencies.initialize();
       final completed = widget.dependencies.progressRepository.completedToday();
+      final inProgress =
+          !completed &&
+          widget.dependencies.progressRepository.inProgressToday();
       if (!mounted) return;
       setState(() {
-        _status = completed ? HomeStatus.completed : HomeStatus.available;
+        _status = completed
+            ? HomeStatus.completed
+            : (inProgress ? HomeStatus.inProgress : HomeStatus.available);
       });
     } catch (_) {
       if (!mounted) return;
@@ -70,8 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         );
-      case HomeStatus.empty:
-        return Center(child: Text(l10n.emptyState));
       case HomeStatus.available:
       case HomeStatus.inProgress:
       case HomeStatus.completed:

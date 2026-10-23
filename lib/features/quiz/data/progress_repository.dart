@@ -49,6 +49,16 @@ class ProgressRepository {
     );
   }
 
+  bool inProgressToday() {
+    final today = LocalDate.fromDateTime(_now());
+    return _progress.dailyProgress.any(
+      (entry) =>
+          LocalDate.fromDateTime(entry.date) == today &&
+          entry.completedQuizzes == 0 &&
+          entry.totalAnswers > 0,
+    );
+  }
+
   bool completedQuizToday(String quizId) {
     final today = LocalDate.fromDateTime(_now());
     return _progress.quizResults.any(

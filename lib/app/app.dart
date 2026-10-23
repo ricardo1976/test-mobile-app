@@ -38,7 +38,9 @@ class CuantoRecuerdasApp extends StatelessWidget {
                 appBar: AppBar(
                   title: Text(AppLocalizations.of(context)!.dailyQuiz),
                 ),
-                body: const Center(child: Text('Reto diario')),
+                body: Center(
+                  child: Text(AppLocalizations.of(context)!.dailyQuiz),
+                ),
               ),
             );
           case '/history':
@@ -47,7 +49,9 @@ class CuantoRecuerdasApp extends StatelessWidget {
                 appBar: AppBar(
                   title: Text(AppLocalizations.of(context)!.history),
                 ),
-                body: const Center(child: Text('Historial')),
+                body: Center(
+                  child: Text(AppLocalizations.of(context)!.history),
+                ),
               ),
             );
         }
