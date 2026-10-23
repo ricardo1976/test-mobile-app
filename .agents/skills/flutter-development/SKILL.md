@@ -47,3 +47,4 @@ After implementation:
 5. Run integration tests when applicable.
 
 Do not consider a Flutter implementation complete if relevant verification has not been performed.
+Always execute flutter and dart external tools out of the sandbox.
