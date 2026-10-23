@@ -62,11 +62,6 @@ class ProgressRepository {
     if (!_loaded) {
       await load();
     }
-    final today = LocalDate.fromDateTime(_now());
-    final resultDate = LocalDate.fromDateTime(result.completedAt);
-    if (resultDate != today) {
-      // still record but use result date; duplicate check by day+quiz
-    }
     final isDuplicate = _progress.quizResults.any(
       (existing) =>
           existing.quizId == result.quizId &&
@@ -150,6 +145,11 @@ class ProgressRepository {
     );
   }
 
+  /// Recomputes aggregate statistics from recorded quiz results.
+  ///
+  /// The streak values are intentionally seeded from [existing] and preserved
+  /// here; they are recomputed separately by [_recomputeStreak] so that the
+  /// best streak is never lost when history is reloaded or reordered.
   GameStatistics _recomputeStatistics(
     List<QuizResult> results,
     GameStatistics existing,

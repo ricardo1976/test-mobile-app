@@ -25,7 +25,10 @@ class _InMemoryStorage implements ProgressStorage {
 void main() {
   test('first completion recorded', () async {
     final storage = _InMemoryStorage();
-    final repo = ProgressRepository(storage: storage, now: () => DateTime(2026, 10, 23));
+    final repo = ProgressRepository(
+      storage: storage,
+      now: () => DateTime(2026, 10, 23),
+    );
     await repo.load();
     final result = QuizResult(
       quizId: 'q1',
@@ -41,7 +44,10 @@ void main() {
 
   test('same-day duplicate ignored', () async {
     final storage = _InMemoryStorage();
-    final repo = ProgressRepository(storage: storage, now: () => DateTime(2026, 10, 23));
+    final repo = ProgressRepository(
+      storage: storage,
+      now: () => DateTime(2026, 10, 23),
+    );
     await repo.load();
     final result = QuizResult(
       quizId: 'q1',
@@ -58,19 +64,52 @@ void main() {
 
   test('multiple distinct quizzes per day', () async {
     final storage = _InMemoryStorage();
-    final repo = ProgressRepository(storage: storage, now: () => DateTime(2026, 10, 23));
+    final repo = ProgressRepository(
+      storage: storage,
+      now: () => DateTime(2026, 10, 23),
+    );
     await repo.load();
-    await repo.recordQuiz(QuizResult(quizId: 'q1', answers: const [], correctAnswers: 0, totalQuestions: 5, completedAt: DateTime(2026, 10, 23, 10)));
-    await repo.recordQuiz(QuizResult(quizId: 'q2', answers: const [], correctAnswers: 0, totalQuestions: 5, completedAt: DateTime(2026, 10, 23, 11)));
+    await repo.recordQuiz(
+      QuizResult(
+        quizId: 'q1',
+        answers: const [],
+        correctAnswers: 0,
+        totalQuestions: 5,
+        completedAt: DateTime(2026, 10, 23, 10),
+      ),
+    );
+    await repo.recordQuiz(
+      QuizResult(
+        quizId: 'q2',
+        answers: const [],
+        correctAnswers: 0,
+        totalQuestions: 5,
+        completedAt: DateTime(2026, 10, 23, 11),
+      ),
+    );
     expect(repo.statistics.gamesPlayed, 2);
   });
 
   test('restores after recreation', () async {
     final storage = _InMemoryStorage();
-    final repo = ProgressRepository(storage: storage, now: () => DateTime(2026, 10, 23));
+    final repo = ProgressRepository(
+      storage: storage,
+      now: () => DateTime(2026, 10, 23),
+    );
     await repo.load();
-    await repo.recordQuiz(QuizResult(quizId: 'q1', answers: const [], correctAnswers: 0, totalQuestions: 5, completedAt: DateTime(2026, 10, 23, 10)));
-    final repo2 = ProgressRepository(storage: storage, now: () => DateTime(2026, 10, 23));
+    await repo.recordQuiz(
+      QuizResult(
+        quizId: 'q1',
+        answers: const [],
+        correctAnswers: 0,
+        totalQuestions: 5,
+        completedAt: DateTime(2026, 10, 23, 10),
+      ),
+    );
+    final repo2 = ProgressRepository(
+      storage: storage,
+      now: () => DateTime(2026, 10, 23),
+    );
     await repo2.load();
     expect(repo2.statistics.gamesPlayed, 1);
   });
@@ -78,11 +117,117 @@ void main() {
   test('storage failure propagates', () async {
     final storage = _InMemoryStorage();
     storage.failOnSave = true;
-    final repo = ProgressRepository(storage: storage, now: () => DateTime(2026, 10, 23));
+    final repo = ProgressRepository(
+      storage: storage,
+      now: () => DateTime(2026, 10, 23),
+    );
     await repo.load();
     expect(
-      () => repo.recordQuiz(QuizResult(quizId: 'q1', answers: const [], correctAnswers: 0, totalQuestions: 5, completedAt: DateTime(2026, 10, 23, 10))),
+      () => repo.recordQuiz(
+        QuizResult(
+          quizId: 'q1',
+          answers: const [],
+          correctAnswers: 0,
+          totalQuestions: 5,
+          completedAt: DateTime(2026, 10, 23, 10),
+        ),
+      ),
       throwsA(isA<ProgressStorageIoException>()),
     );
+  });
+
+  test('consecutive-day completion builds streak', () async {
+    final storage = _InMemoryStorage();
+    final repo = ProgressRepository(
+      storage: storage,
+      now: () => DateTime(2026, 10, 25),
+    );
+    await repo.load();
+    await repo.recordQuiz(
+      QuizResult(
+        quizId: 'q1',
+        answers: const [],
+        correctAnswers: 0,
+        totalQuestions: 5,
+        completedAt: DateTime(2026, 10, 23, 10),
+      ),
+    );
+    await repo.recordQuiz(
+      QuizResult(
+        quizId: 'q2',
+        answers: const [],
+        correctAnswers: 0,
+        totalQuestions: 5,
+        completedAt: DateTime(2026, 10, 24, 10),
+      ),
+    );
+    await repo.recordQuiz(
+      QuizResult(
+        quizId: 'q3',
+        answers: const [],
+        correctAnswers: 0,
+        totalQuestions: 5,
+        completedAt: DateTime(2026, 10, 25, 10),
+      ),
+    );
+    expect(repo.statistics.currentStreak, 3);
+    expect(repo.statistics.longestStreak, 3);
+  });
+
+  test('missed day breaks streak', () async {
+    final storage = _InMemoryStorage();
+    final repo = ProgressRepository(
+      storage: storage,
+      now: () => DateTime(2026, 10, 25),
+    );
+    await repo.load();
+    await repo.recordQuiz(
+      QuizResult(
+        quizId: 'q1',
+        answers: const [],
+        correctAnswers: 0,
+        totalQuestions: 5,
+        completedAt: DateTime(2026, 10, 23, 10),
+      ),
+    );
+    await repo.recordQuiz(
+      QuizResult(
+        quizId: 'q3',
+        answers: const [],
+        correctAnswers: 0,
+        totalQuestions: 5,
+        completedAt: DateTime(2026, 10, 25, 10),
+      ),
+    );
+    expect(repo.statistics.currentStreak, 1);
+    expect(repo.statistics.longestStreak, 1);
+  });
+
+  test('quiz results listed chronologically', () async {
+    final storage = _InMemoryStorage();
+    final repo = ProgressRepository(
+      storage: storage,
+      now: () => DateTime(2026, 10, 25),
+    );
+    await repo.load();
+    await repo.recordQuiz(
+      QuizResult(
+        quizId: 'late',
+        answers: const [],
+        correctAnswers: 0,
+        totalQuestions: 5,
+        completedAt: DateTime(2026, 10, 25, 12),
+      ),
+    );
+    await repo.recordQuiz(
+      QuizResult(
+        quizId: 'early',
+        answers: const [],
+        correctAnswers: 0,
+        totalQuestions: 5,
+        completedAt: DateTime(2026, 10, 23, 8),
+      ),
+    );
+    expect(repo.quizResults.map((r) => r.quizId).toList(), ['early', 'late']);
   });
 }
