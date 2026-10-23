@@ -44,4 +44,21 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get history => 'Historial';
+
+  @override
+  String get noQuestionsAvailable => 'No hay preguntas disponibles';
+
+  @override
+  String questionOfTotal(int current, int total) {
+    return 'Pregunta $current/$total';
+  }
+
+  @override
+  String get submitAnswer => 'Enviar';
+
+  @override
+  String get nextQuestion => 'Siguiente';
+
+  @override
+  String get finishQuiz => 'Finalizar';
 }

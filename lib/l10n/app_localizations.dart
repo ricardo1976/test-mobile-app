@@ -165,6 +165,36 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Historial'**
   String get history;
+
+  /// No description provided for @noQuestionsAvailable.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay preguntas disponibles'**
+  String get noQuestionsAvailable;
+
+  /// No description provided for @questionOfTotal.
+  ///
+  /// In es, this message translates to:
+  /// **'Pregunta {current}/{total}'**
+  String questionOfTotal(int current, int total);
+
+  /// No description provided for @submitAnswer.
+  ///
+  /// In es, this message translates to:
+  /// **'Enviar'**
+  String get submitAnswer;
+
+  /// No description provided for @nextQuestion.
+  ///
+  /// In es, this message translates to:
+  /// **'Siguiente'**
+  String get nextQuestion;
+
+  /// No description provided for @finishQuiz.
+  ///
+  /// In es, this message translates to:
+  /// **'Finalizar'**
+  String get finishQuiz;
 }
 
 class _AppLocalizationsDelegate

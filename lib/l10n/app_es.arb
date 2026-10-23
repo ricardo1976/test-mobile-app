@@ -11,5 +11,20 @@
   "historyEmpty": "Sin resultados todavía.",
   "retry": "Reintentar",
   "dailyQuiz": "Reto diario",
-  "history": "Historial"
+  "history": "Historial",
+  "noQuestionsAvailable": "No hay preguntas disponibles",
+  "questionOfTotal": "Pregunta {current}/{total}",
+  "@questionOfTotal": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "submitAnswer": "Enviar",
+  "nextQuestion": "Siguiente",
+  "finishQuiz": "Finalizar"
 }
