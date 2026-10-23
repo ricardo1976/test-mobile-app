@@ -16781,7 +16781,7 @@
         {
           "id": "answer-1",
           "text": {
-            "es-ES": "la Expo 92 de Sevilla fue anunciada"
+            "es-ES": "las obras de acondicionamiento de la Expo 92 en Sevilla comenzaron"
           },
           "isCorrect": false
         },
@@ -17034,7 +17034,7 @@
         {
           "id": "answer-2",
           "text": {
-            "es-ES": "la Expo 92 de Sevilla fue anunciada"
+            "es-ES": "las obras de acondicionamiento de la Expo 92 en Sevilla comenzaron"
           },
           "isCorrect": false
         },
@@ -17308,7 +17308,7 @@
       "categoryId": "everyday_culture",
       "decade": 1980,
       "prompt": {
-        "es-ES": "¿En qué año ocurrió este hecho: la Expo 92 de Sevilla fue anunciada?"
+        "es-ES": "¿En qué año ocurrió este hecho: las obras de acondicionamiento de la Expo 92 en Sevilla comenzaron?"
       },
       "answers": [
         {
@@ -17341,7 +17341,7 @@
         }
       ],
       "explanation": {
-        "es-ES": "En 1987, la Expo 92 de Sevilla fue anunciada."
+        "es-ES": "En 1987, las obras de acondicionamiento de la Expo 92 en Sevilla comenzaron."
       }
     },
     {
@@ -17349,7 +17349,7 @@
       "categoryId": "everyday_culture",
       "decade": 1980,
       "prompt": {
-        "es-ES": "¿Qué acontecimiento se anunció en 1987?"
+        "es-ES": "¿Qué obras comenzaron en 1987?"
       },
       "answers": [
         {
@@ -17369,7 +17369,7 @@
         {
           "id": "answer-3",
           "text": {
-            "es-ES": "la Expo 92 de Sevilla fue anunciada"
+            "es-ES": "las obras de acondicionamiento de la Expo 92 en Sevilla comenzaron"
           },
           "isCorrect": true
         },
@@ -17382,7 +17382,7 @@
         }
       ],
       "explanation": {
-        "es-ES": "En 1987, la Expo 92 de Sevilla fue anunciada."
+        "es-ES": "En 1987, las obras de acondicionamiento de la Expo 92 en Sevilla comenzaron."
       }
     },
     {

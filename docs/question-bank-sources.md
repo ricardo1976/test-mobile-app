@@ -27,6 +27,7 @@ paraphrased facts; it does not reproduce source text.
 - European Central Bank, [the euro](https://www.ecb.europa.eu/euro/intro/html/index.en.html) and [the 2002 cash changeover](https://www.ecb.europa.eu/euro/changeover/2002/html/index.en.html).
 - RTVE, [1990s summer songs and popular culture](https://www.rtve.es/noticias/20080718/las-canciones-del-verano-en-los-90/117551.shtml).
 - European Commission, [Madrid as 1992 European Capital of Culture](https://culture.ec.europa.eu/sv/node/3654).
+- Expo 92 official history, [the Sevilla candidature and construction chronology](https://www.expo92.es/laexpo/), including the start of site works in 1987.
 - RTVE, [the Spanish Constitution's 30th anniversary in 2008](https://www.rtve.es/noticias/20081205/constitucion-cumple-30-anos-solidez/200055.shtml).
 
 For individual fact corrections and additions, include the supporting source

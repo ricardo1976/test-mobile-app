@@ -260,7 +260,7 @@ FACTS = {
             ("Coca-Cola presentó New Coke", 1985, "producto", "se lanzó"),
             ("la explosión de Chernóbil conmocionó Europa", 1986, "acontecimiento", "ocurrió"),
             ("España ingresó en las Comunidades Europeas", 1986, "acontecimiento", "ocurrió"),
-            ("la Expo 92 de Sevilla fue anunciada", 1987, "acontecimiento", "se anunció"),
+            ("las obras de acondicionamiento de la Expo 92 en Sevilla comenzaron", 1987, "obras", "comenzaron"),
             ("el gusano Morris se propagó por Internet", 1988, "incidente tecnológico", "ocurrió"),
             ("la caída del Muro de Berlín fue retransmitida en directo", 1989, "acontecimiento", "ocurrió"),
             ("Torrespaña se inauguró en Madrid", 1982, "edificio", "se inauguró"),
