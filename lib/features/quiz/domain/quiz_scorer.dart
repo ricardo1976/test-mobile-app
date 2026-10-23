@@ -70,6 +70,13 @@ class QuizScorer {
           'Missing question for quiz answer',
         );
       }
+      if (question.id != submitted.questionId) {
+        throw ArgumentError.value(
+          submitted.questionId,
+          'questionsById',
+          'Question ID must match its map key',
+        );
+      }
       if (!quizQuestionIds.contains(question.id)) {
         throw ArgumentError.value(
           submitted.questionId,

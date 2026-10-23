@@ -129,5 +129,20 @@ void main() {
         throwsArgumentError,
       );
     });
+
+    test('rejects question definitions stored under another question ID', () {
+      final crossedQuestions = Map<String, Question>.of(questionsById)
+        ..['q0'] = questionsById['q1']!
+        ..['q1'] = questionsById['q0']!;
+
+      expect(
+        () => scorer.score(
+          quiz: quiz,
+          questionsById: crossedQuestions,
+          answers: answersWithCorrectCount(1),
+        ),
+        throwsArgumentError,
+      );
+    });
   });
 }
