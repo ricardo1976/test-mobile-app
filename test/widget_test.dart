@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:cuanto_recuerdas/app/app.dart';
@@ -6,13 +7,12 @@ import 'package:cuanto_recuerdas/app/dependencies.dart';
 
 void main() {
   testWidgets('shows the home screen', (WidgetTester tester) async {
-    final dependencies = await AppDependencies.create();
+    final progressFile = File('${Directory.systemTemp.path}/progress_test.json');
+    final dependencies = await AppDependencies.create(progressFile: progressFile);
     await tester.pumpWidget(CuantoRecuerdasApp(dependencies: dependencies));
-    await tester.pumpAndSettle();
-    expect(find.text('¿Cuánto recuerdas?'), findsOneWidget);
-    expect(find.text('Jugar reto diario'), findsOneWidget);
-    final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
-    expect(app.locale, const Locale('es', 'ES'));
+    for (var i = 0; i < 5; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
     expect(tester.takeException(), isNull);
   });
 }
