@@ -10,6 +10,8 @@ import '../features/quiz/domain/daily_quiz_generator.dart';
 import '../features/quiz/domain/quiz_scorer.dart';
 import '../features/quiz/domain/streak_calculator.dart';
 
+import 'services/advertising_service.dart';
+
 class AppDependencies {
   AppDependencies({
     required this.questionRepository,
@@ -18,6 +20,7 @@ class AppDependencies {
     required this.dailyQuizGenerator,
     required this.quizScorer,
     required this.streakCalculator,
+    this.adService = const NoOpAdService(),
   });
 
   final QuestionRepository questionRepository;
@@ -26,10 +29,12 @@ class AppDependencies {
   final DailyQuizGenerator dailyQuizGenerator;
   final QuizScorer quizScorer;
   final StreakCalculator streakCalculator;
+  final AdService adService;
 
   Future<void> initialize() async {
     await questionRepository.load();
     await progressRepository.load();
+    await adService.initialize();
   }
 
   static Future<AppDependencies> create({File? progressFile}) async {
@@ -43,6 +48,7 @@ class AppDependencies {
       dailyQuizGenerator: const DailyQuizGenerator(),
       quizScorer: const QuizScorer(),
       streakCalculator: const StreakCalculator(),
+      adService: const NoOpAdService(),
     );
     await dependencies.initialize();
     return dependencies;
