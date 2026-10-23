@@ -2,12 +2,11 @@ import 'dart:convert';
 
 /// Categories supported by the initial question bank.
 const questionBankCategoryIds = <String>{
+  'television',
   'music',
-  'film_tv',
-  'sports',
-  'technology',
-  'toys_games',
-  'news_events',
+  'cinema',
+  'video_games_technology',
+  'everyday_culture',
 };
 
 /// Decades covered by the V0.1 product.

@@ -32,10 +32,15 @@ Exactly four answers and exactly one correct answer are required. IDs must be
 non-empty and question IDs unique across the bank. Text maps must contain at
 least one non-empty locale and value.
 
-The V0.1 category IDs are `music`, `film_tv`, `sports`, `technology`,
-`toys_games`, and `news_events`. Supported decades are `1980`, `1990`, and
-`2000`. Additions require an intentional update to the validator and this
-catalogue.
+The V0.1 category IDs are `television`, `music`, `cinema`,
+`video_games_technology`, and `everyday_culture`. Supported decades are
+`1980`, `1990`, and `2000`. Additions require an intentional update to the
+validator and this catalogue.
+
+The initial bank is stored at `assets/questions.json` and contains 500
+questions: 125 television, 100 music, 100 cinema, 75 video games and
+technology, and 100 everyday culture. Questions are spread across the three
+supported decades, with a full-bank target of approximately 166 or 167 each.
 
 Validate a bank with:
 
@@ -43,5 +48,6 @@ Validate a bank with:
 dart run tool/validate_questions.dart assets/questions.json
 ```
 
-The bank file is not included until authored separately. The validator uses
-only the Dart SDK and returns all detected issues with their JSON paths.
+The bank is generated reproducibly by `python tool/generate_question_bank.py`.
+The Dart validator uses only the Dart SDK and returns detected issues with
+their JSON paths.
