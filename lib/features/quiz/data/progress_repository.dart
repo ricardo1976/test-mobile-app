@@ -20,7 +20,15 @@ class ProgressRepository {
   bool _loaded = false;
 
   Future<StoredProgress> load() async {
-    _progress = await _storage.load();
+    final loaded = await _storage.load();
+    final sortedResults = [...loaded.quizResults]
+      ..sort((a, b) => a.completedAt.compareTo(b.completedAt));
+    final stats = _recomputeStatistics(sortedResults, loaded.statistics);
+    _progress = StoredProgress(
+      quizResults: sortedResults,
+      dailyProgress: loaded.dailyProgress,
+      statistics: stats,
+    );
     _recomputeStreak();
     _loaded = true;
     return _progress;
@@ -54,11 +62,6 @@ class ProgressRepository {
     if (!_loaded) {
       await load();
     }
-    final today = LocalDate.fromDateTime(_now());
-    final resultDate = LocalDate.fromDateTime(result.completedAt);
-    if (resultDate != today) {
-      // still record but use result date; duplicate check by day+quiz
-    }
     final isDuplicate = _progress.quizResults.any(
       (existing) =>
           existing.quizId == result.quizId &&
@@ -69,7 +72,8 @@ class ProgressRepository {
       return QuizRecordResult.duplicate;
     }
 
-    final newResults = [..._progress.quizResults, result];
+    final newResults = [..._progress.quizResults, result]
+      ..sort((a, b) => a.completedAt.compareTo(b.completedAt));
 
     // Update daily progress for result date.
     final date = DateTime(
@@ -138,6 +142,24 @@ class ProgressRepository {
       quizResults: _progress.quizResults,
       dailyProgress: _progress.dailyProgress,
       statistics: newStats,
+    );
+  }
+
+  /// Recomputes aggregate statistics from recorded quiz results.
+  ///
+  /// The streak values are intentionally seeded from [existing] and preserved
+  /// here; they are recomputed separately by [_recomputeStreak] so that the
+  /// best streak is never lost when history is reloaded or reordered.
+  GameStatistics _recomputeStatistics(
+    List<QuizResult> results,
+    GameStatistics existing,
+  ) {
+    return GameStatistics(
+      gamesPlayed: results.length,
+      correctAnswers: results.fold<int>(0, (sum, r) => sum + r.correctAnswers),
+      totalAnswers: results.fold<int>(0, (sum, r) => sum + r.totalQuestions),
+      currentStreak: existing.currentStreak,
+      longestStreak: existing.longestStreak,
     );
   }
 }
