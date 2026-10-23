@@ -1,7 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 import 'app/app.dart';
+import 'app/dependencies.dart';
 
-void main() {
-  runApp(const CuantoRecuerdasApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final dependencies = await AppDependencies.create();
+  runApp(CuantoRecuerdasApp(dependencies: dependencies));
 }
