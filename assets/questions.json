@@ -6771,7 +6771,7 @@
       "categoryId": "music",
       "decade": 1990,
       "prompt": {
-        "es-ES": "¿En qué año se publicó «All My Loving»?"
+        "es-ES": "¿En qué año se publicó «All My Loving (versión de Los Manolos)»?"
       },
       "answers": [
         {
@@ -6804,7 +6804,7 @@
         }
       ],
       "explanation": {
-        "es-ES": "Canción «All My Loving» se publicó en 1991."
+        "es-ES": "Canción «All My Loving (versión de Los Manolos)» se publicó en 1991."
       }
     },
     {
@@ -6832,7 +6832,7 @@
         {
           "id": "answer-3",
           "text": {
-            "es-ES": "All My Loving"
+            "es-ES": "All My Loving (versión de Los Manolos)"
           },
           "isCorrect": true
         },
@@ -6845,7 +6845,7 @@
         }
       ],
       "explanation": {
-        "es-ES": "Canción «All My Loving» se publicó en 1991."
+        "es-ES": "Canción «All My Loving (versión de Los Manolos)» se publicó en 1991."
       }
     },
     {
@@ -6900,7 +6900,7 @@
         {
           "id": "answer-1",
           "text": {
-            "es-ES": "All My Loving"
+            "es-ES": "All My Loving (versión de Los Manolos)"
           },
           "isCorrect": false
         },
@@ -7167,7 +7167,7 @@
         {
           "id": "answer-4",
           "text": {
-            "es-ES": "All My Loving"
+            "es-ES": "All My Loving (versión de Los Manolos)"
           },
           "isCorrect": false
         }
@@ -7481,7 +7481,7 @@
         {
           "id": "answer-2",
           "text": {
-            "es-ES": "All My Loving"
+            "es-ES": "All My Loving (versión de Los Manolos)"
           },
           "isCorrect": false
         },
@@ -7570,7 +7570,7 @@
         {
           "id": "answer-3",
           "text": {
-            "es-ES": "All My Loving"
+            "es-ES": "All My Loving (versión de Los Manolos)"
           },
           "isCorrect": false
         },
@@ -7652,7 +7652,7 @@
         {
           "id": "answer-3",
           "text": {
-            "es-ES": "All My Loving"
+            "es-ES": "All My Loving (versión de Los Manolos)"
           },
           "isCorrect": false
         },
@@ -7727,7 +7727,7 @@
         {
           "id": "answer-2",
           "text": {
-            "es-ES": "All My Loving"
+            "es-ES": "All My Loving (versión de Los Manolos)"
           },
           "isCorrect": false
         },
@@ -18503,7 +18503,7 @@
         {
           "id": "answer-1",
           "text": {
-            "es-ES": "España organizó la Exposición Universal de Sevilla"
+            "es-ES": "Madrid fue Capital Europea de la Cultura"
           },
           "isCorrect": false
         },
@@ -18599,7 +18599,7 @@
         {
           "id": "answer-3",
           "text": {
-            "es-ES": "España organizó la Exposición Universal de Sevilla"
+            "es-ES": "Madrid fue Capital Europea de la Cultura"
           },
           "isCorrect": false
         },
@@ -18702,7 +18702,7 @@
       "categoryId": "everyday_culture",
       "decade": 1990,
       "prompt": {
-        "es-ES": "¿En qué año ocurrió este hecho: España organizó la Exposición Universal de Sevilla?"
+        "es-ES": "¿En qué año ocurrió este hecho: Madrid fue Capital Europea de la Cultura?"
       },
       "answers": [
         {
@@ -18735,7 +18735,7 @@
         }
       ],
       "explanation": {
-        "es-ES": "En 1992, España organizó la Exposición Universal de Sevilla."
+        "es-ES": "En 1992, Madrid fue Capital Europea de la Cultura."
       }
     },
     {
@@ -18743,7 +18743,7 @@
       "categoryId": "everyday_culture",
       "decade": 1990,
       "prompt": {
-        "es-ES": "¿Qué acontecimiento se celebró en 1992?"
+        "es-ES": "¿Qué acontecimiento cultural se celebró en 1992?"
       },
       "answers": [
         {
@@ -18763,7 +18763,7 @@
         {
           "id": "answer-3",
           "text": {
-            "es-ES": "España organizó la Exposición Universal de Sevilla"
+            "es-ES": "Madrid fue Capital Europea de la Cultura"
           },
           "isCorrect": true
         },
@@ -18776,7 +18776,7 @@
         }
       ],
       "explanation": {
-        "es-ES": "En 1992, España organizó la Exposición Universal de Sevilla."
+        "es-ES": "En 1992, Madrid fue Capital Europea de la Cultura."
       }
     },
     {
@@ -19426,7 +19426,7 @@
         {
           "id": "answer-4",
           "text": {
-            "es-ES": "España celebró el centenario de la Constitución de 1978"
+            "es-ES": "España conmemoró el 30.º aniversario de la Constitución de 1978"
           },
           "isCorrect": false
         }
@@ -19494,7 +19494,7 @@
         {
           "id": "answer-2",
           "text": {
-            "es-ES": "España celebró el centenario de la Constitución de 1978"
+            "es-ES": "España conmemoró el 30.º aniversario de la Constitución de 1978"
           },
           "isCorrect": false
         },
@@ -19979,7 +19979,7 @@
         {
           "id": "answer-1",
           "text": {
-            "es-ES": "España celebró el centenario de la Constitución de 1978"
+            "es-ES": "España conmemoró el 30.º aniversario de la Constitución de 1978"
           },
           "isCorrect": false
         },
@@ -20150,7 +20150,7 @@
         {
           "id": "answer-2",
           "text": {
-            "es-ES": "España celebró el centenario de la Constitución de 1978"
+            "es-ES": "España conmemoró el 30.º aniversario de la Constitución de 1978"
           },
           "isCorrect": false
         },
@@ -20260,7 +20260,7 @@
       "categoryId": "everyday_culture",
       "decade": 2000,
       "prompt": {
-        "es-ES": "¿En qué año ocurrió este hecho: España celebró el centenario de la Constitución de 1978?"
+        "es-ES": "¿En qué año ocurrió este hecho: España conmemoró el 30.º aniversario de la Constitución de 1978?"
       },
       "answers": [
         {
@@ -20293,7 +20293,7 @@
         }
       ],
       "explanation": {
-        "es-ES": "En 2008, España celebró el centenario de la Constitución de 1978."
+        "es-ES": "En 2008, España conmemoró el 30.º aniversario de la Constitución de 1978."
       }
     },
     {
@@ -20328,13 +20328,13 @@
         {
           "id": "answer-4",
           "text": {
-            "es-ES": "España celebró el centenario de la Constitución de 1978"
+            "es-ES": "España conmemoró el 30.º aniversario de la Constitución de 1978"
           },
           "isCorrect": true
         }
       ],
       "explanation": {
-        "es-ES": "En 2008, España celebró el centenario de la Constitución de 1978."
+        "es-ES": "En 2008, España conmemoró el 30.º aniversario de la Constitución de 1978."
       }
     },
     {
@@ -20485,7 +20485,7 @@
         {
           "id": "answer-3",
           "text": {
-            "es-ES": "España celebró el centenario de la Constitución de 1978"
+            "es-ES": "España conmemoró el 30.º aniversario de la Constitución de 1978"
           },
           "isCorrect": false
         },

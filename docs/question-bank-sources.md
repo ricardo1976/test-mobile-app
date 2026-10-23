@@ -14,6 +14,7 @@ paraphrased facts; it does not reproduce source text.
 
 - RTVE, [Spanish summer songs of the 1990s](https://www.rtve.es/noticias/20080718/las-canciones-del-verano-en-los-90/117551.shtml).
 - RTVE Play, [songs from the 1990s](https://www.rtve.es/play/noticias/20230518/catorce-canciones-anos-90/2444860.shtml).
+- Apple Music, ["All My Loving" by Los Manolos](https://music.apple.com/us/song/258716865), released in 1991. The question names the performer to distinguish this cover from the Beatles' 1963 original.
 
 ## Video games and technology
 
@@ -25,7 +26,10 @@ paraphrased facts; it does not reproduce source text.
 
 - European Central Bank, [the euro](https://www.ecb.europa.eu/euro/intro/html/index.en.html) and [the 2002 cash changeover](https://www.ecb.europa.eu/euro/changeover/2002/html/index.en.html).
 - RTVE, [1990s summer songs and popular culture](https://www.rtve.es/noticias/20080718/las-canciones-del-verano-en-los-90/117551.shtml).
+- European Commission, [Madrid as 1992 European Capital of Culture](https://culture.ec.europa.eu/sv/node/3654).
+- RTVE, [the Spanish Constitution's 30th anniversary in 2008](https://www.rtve.es/noticias/20081205/constitucion-cumple-30-anos-solidez/200055.shtml).
 
-The sources provide historical reference material for fact checking; the
-maintainer should add a more specific source link when correcting or adding a
-question whose date or regional release differs by market.
+For individual fact corrections and additions, include the supporting source
+beside the fact in this catalogue. Release dates can vary by version and
+market; questions must identify the artist, cut, or region when that affects
+the expected answer.

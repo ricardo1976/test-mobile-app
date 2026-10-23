@@ -7,43 +7,68 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('initial question bank meets the agreed distribution and schema', () async {
-    final source = await rootBundle.loadString('assets/questions.json');
-    final bank = jsonDecode(source) as Map<String, dynamic>;
-    final questions = bank['questions'] as List<dynamic>;
+  test(
+    'initial question bank meets the agreed distribution and schema',
+    () async {
+      final source = await rootBundle.loadString('assets/questions.json');
+      final bank = jsonDecode(source) as Map<String, dynamic>;
+      final questions = bank['questions'] as List<dynamic>;
 
-    expect(validateQuestionBank(bank), isEmpty);
-    expect(questions, hasLength(500));
-    expect(
-      questions.map((question) => (question as Map)['prompt']['es-ES']),
-      hasLength(questions.length),
-    );
+      expect(validateQuestionBank(bank), isEmpty);
+      expect(questions, hasLength(500));
 
-    final categoryCounts = <String, int>{};
-    final decadeCounts = <int, int>{};
-    for (final question in questions.cast<Map<String, dynamic>>()) {
-      categoryCounts.update(
-        question['categoryId'] as String,
-        (count) => count + 1,
-        ifAbsent: () => 1,
-      );
-      decadeCounts.update(
-        question['decade'] as int,
-        (count) => count + 1,
-        ifAbsent: () => 1,
-      );
-    }
+      final categoryCounts = <String, int>{};
+      final decadeCounts = <int, int>{};
+      for (final question in questions.cast<Map<String, dynamic>>()) {
+        expect(
+          (question['prompt'] as Map<String, dynamic>)['es-ES'],
+          isA<String>().having(
+            (text) => text.trim(),
+            'non-empty text',
+            isNotEmpty,
+          ),
+        );
+        expect(
+          (question['explanation'] as Map<String, dynamic>)['es-ES'],
+          isA<String>().having(
+            (text) => text.trim(),
+            'non-empty text',
+            isNotEmpty,
+          ),
+        );
+        for (final answer in question['answers'] as List<dynamic>) {
+          expect(
+            (answer['text'] as Map<String, dynamic>)['es-ES'],
+            isA<String>().having(
+              (text) => text.trim(),
+              'non-empty text',
+              isNotEmpty,
+            ),
+          );
+        }
+        categoryCounts.update(
+          question['categoryId'] as String,
+          (count) => count + 1,
+          ifAbsent: () => 1,
+        );
+        decadeCounts.update(
+          question['decade'] as int,
+          (count) => count + 1,
+          ifAbsent: () => 1,
+        );
+      }
 
-    expect(categoryCounts, {
-      'television': 125,
-      'music': 100,
-      'cinema': 100,
-      'video_games_technology': 75,
-      'everyday_culture': 100,
-    });
-    expect(decadeCounts.keys, containsAll([1980, 1990, 2000]));
-    for (final count in decadeCounts.values) {
-      expect(count, inInclusiveRange(150, 180));
-    }
-  });
+      expect(categoryCounts, {
+        'television': 125,
+        'music': 100,
+        'cinema': 100,
+        'video_games_technology': 75,
+        'everyday_culture': 100,
+      });
+      expect(decadeCounts.keys, containsAll([1980, 1990, 2000]));
+      for (final count in decadeCounts.values) {
+        expect(count, inInclusiveRange(150, 180));
+      }
+    },
+  );
 }
