@@ -10,6 +10,7 @@ import 'package:cuanto_recuerdas/features/quiz/data/progress_storage.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/daily_quiz_generator.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/quiz_scorer.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/streak_calculator.dart';
+import 'package:cuanto_recuerdas/l10n/app_localizations.dart';
 import 'package:cuanto_recuerdas/features/quiz/presentation/quiz_results_screen.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/models.dart';
 
@@ -30,7 +31,19 @@ class _DummyQuestionRepository implements QuestionRepository {
   Future<List<Question>> getAllQuestions() async => [];
 
   @override
-  Future<String> getSchemaVersion() async => '1';
+  Future<List<Question>> getQuestionsByCategory(String categoryId) async => [];
+
+  @override
+  Future<List<Question>> getQuestionsByDecade(int decade) async => [];
+
+  @override
+  Future<Question?> getQuestionById(String id) async => null;
+
+  @override
+  Future<int> getSchemaVersion() async => 1;
+
+  @override
+  Future<void> load() async {}
 }
 
 Future<AppDependencies> _buildDeps() async {

@@ -166,6 +166,14 @@ abstract class AppLocalizations {
   /// **'Historial'**
   String get history;
 
+  String get statistics;
+  String get gamesPlayed;
+  String get correctAnswers;
+  String get totalAnswers;
+  String get accuracy;
+  String get currentStreak;
+  String get longestStreak;
+
   /// No description provided for @noQuestionsAvailable.
   ///
   /// In es, this message translates to:
