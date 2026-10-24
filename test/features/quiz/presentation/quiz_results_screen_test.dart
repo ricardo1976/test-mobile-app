@@ -11,7 +11,7 @@ import 'package:cuanto_recuerdas/features/quiz/domain/daily_quiz_generator.dart'
 import 'package:cuanto_recuerdas/features/quiz/domain/quiz_scorer.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/streak_calculator.dart';
 import 'package:cuanto_recuerdas/features/quiz/presentation/quiz_results_screen.dart';
-import 'package:cuanto_recuerdas/l10n/app_localizations.dart';
+import 'package:cuanto_recuerdas/features/quiz/domain/models.dart';
 
 class _InMemoryStorage implements ProgressStorage {
   StoredProgress _value = StoredProgress.empty();
