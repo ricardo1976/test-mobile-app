@@ -166,14 +166,6 @@ abstract class AppLocalizations {
   /// **'Historial'**
   String get history;
 
-  String get statistics;
-  String get gamesPlayed;
-  String get correctAnswers;
-  String get totalAnswers;
-  String get accuracy;
-  String get currentStreak;
-  String get longestStreak;
-
   /// No description provided for @noQuestionsAvailable.
   ///
   /// In es, this message translates to:
@@ -257,6 +249,60 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Volver al inicio'**
   String get backToHome;
+
+  /// No description provided for @shareResult.
+  ///
+  /// In es, this message translates to:
+  /// **'Compartir resultado'**
+  String get shareResult;
+
+  /// No description provided for @shareResultText.
+  ///
+  /// In es, this message translates to:
+  /// **'He sacado {correct}/{total} en \"¿Cuánto recuerdas?\". ¡Pruébalo tú también!'**
+  String shareResultText(int correct, int total);
+
+  /// No description provided for @statistics.
+  ///
+  /// In es, this message translates to:
+  /// **'Estadísticas'**
+  String get statistics;
+
+  /// No description provided for @gamesPlayed.
+  ///
+  /// In es, this message translates to:
+  /// **'Partidas jugadas'**
+  String get gamesPlayed;
+
+  /// No description provided for @correctAnswers.
+  ///
+  /// In es, this message translates to:
+  /// **'Respuestas correctas'**
+  String get correctAnswers;
+
+  /// No description provided for @totalAnswers.
+  ///
+  /// In es, this message translates to:
+  /// **'Respuestas totales'**
+  String get totalAnswers;
+
+  /// No description provided for @accuracy.
+  ///
+  /// In es, this message translates to:
+  /// **'Precisión'**
+  String get accuracy;
+
+  /// No description provided for @currentStreak.
+  ///
+  /// In es, this message translates to:
+  /// **'Racha actual'**
+  String get currentStreak;
+
+  /// No description provided for @longestStreak.
+  ///
+  /// In es, this message translates to:
+  /// **'Mejor racha'**
+  String get longestStreak;
 }
 
 class _AppLocalizationsDelegate

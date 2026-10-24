@@ -35,6 +35,19 @@ class QuizResultsScreen extends StatelessWidget {
     return l10n.feedbackPoor;
   }
 
+  Future<void> _shareResult(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+    final text = l10n.shareResultText(
+      result.correctAnswers,
+      result.totalQuestions,
+    );
+    try {
+      await dependencies.shareService.shareText(text);
+    } catch (_) {
+      // Do not corrupt quiz state on sharing errors.
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -69,6 +82,11 @@ class QuizResultsScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 32),
+                AppPrimaryButton(
+                  onPressed: () => _shareResult(context),
+                  child: Text(l10n.shareResult),
+                ),
+                const SizedBox(height: 12),
                 AppPrimaryButton(
                   onPressed: () {
                     Navigator.of(context).popUntil((route) => route.isFirst);

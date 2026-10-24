@@ -11,6 +11,7 @@ import '../features/quiz/domain/quiz_scorer.dart';
 import '../features/quiz/domain/streak_calculator.dart';
 
 import 'services/advertising_service.dart';
+import 'services/share_service.dart';
 
 class AppDependencies {
   AppDependencies({
@@ -21,6 +22,7 @@ class AppDependencies {
     required this.quizScorer,
     required this.streakCalculator,
     this.adService = const NoOpAdService(),
+    this.shareService = const NoOpShareService(),
   });
 
   final QuestionRepository questionRepository;
@@ -30,6 +32,7 @@ class AppDependencies {
   final QuizScorer quizScorer;
   final StreakCalculator streakCalculator;
   final AdService adService;
+  final ShareService shareService;
 
   Future<void> initialize() async {
     await questionRepository.load();
@@ -49,6 +52,7 @@ class AppDependencies {
       quizScorer: const QuizScorer(),
       streakCalculator: const StreakCalculator(),
       adService: const NoOpAdService(),
+      shareService: const NoOpShareService(),
     );
     await dependencies.initialize();
     return dependencies;

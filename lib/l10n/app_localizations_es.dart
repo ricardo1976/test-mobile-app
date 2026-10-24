@@ -46,27 +46,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get history => 'Historial';
 
   @override
-  String get statistics => 'Estadísticas';
-
-  @override
-  String get gamesPlayed => 'Partidas jugadas';
-
-  @override
-  String get correctAnswers => 'Respuestas correctas';
-
-  @override
-  String get totalAnswers => 'Respuestas totales';
-
-  @override
-  String get accuracy => 'Precisión';
-
-  @override
-  String get currentStreak => 'Racha actual';
-
-  @override
-  String get longestStreak => 'Mejor racha';
-
-  @override
   String get noQuestionsAvailable => 'No hay preguntas disponibles';
 
   @override
@@ -111,4 +90,33 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get backToHome => 'Volver al inicio';
+
+  @override
+  String get shareResult => 'Compartir resultado';
+
+  @override
+  String shareResultText(int correct, int total) {
+    return 'He sacado $correct/$total en \"¿Cuánto recuerdas?\". ¡Pruébalo tú también!';
+  }
+
+  @override
+  String get statistics => 'Estadísticas';
+
+  @override
+  String get gamesPlayed => 'Partidas jugadas';
+
+  @override
+  String get correctAnswers => 'Respuestas correctas';
+
+  @override
+  String get totalAnswers => 'Respuestas totales';
+
+  @override
+  String get accuracy => 'Precisión';
+
+  @override
+  String get currentStreak => 'Racha actual';
+
+  @override
+  String get longestStreak => 'Mejor racha';
 }
