@@ -1,4 +1,4 @@
-import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 
 abstract class ShareService {
   const ShareService();
@@ -16,16 +16,13 @@ class NoOpShareService extends ShareService {
 class PlatformShareService extends ShareService {
   const PlatformShareService();
 
-  static const MethodChannel _channel = MethodChannel('app.share');
-
   @override
   Future<void> shareText(String text) async {
     try {
-      await _channel.invokeMethod('shareText', {'text': text});
-    } on PlatformException {
-      // Ignore platform sharing errors; do not corrupt app state.
+      await Share.share(text);
     } catch (_) {
       // Ignore any sharing errors; do not corrupt app state.
     }
   }
 }
+
