@@ -41,20 +41,22 @@ class _HistoryScreenState extends State<HistoryScreen> {
           final results = progress.quizResults;
           final stats = progress.statistics;
 
-          if (results.isEmpty) {
-            return Center(child: Text(l10n.historyEmpty));
-          }
-
           return ListView(
             children: [
               _StatisticsSection(stats: stats, l10n: l10n),
               const Divider(),
-              ...results.reversed.map(
-                (r) => ListTile(
-                  title: Text(dateFormat.format(r.completedAt)),
-                  subtitle: Text('${r.correctAnswers}/${r.totalQuestions}'),
+              if (results.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Center(child: Text(l10n.historyEmpty)),
+                )
+              else
+                ...results.reversed.map(
+                  (r) => ListTile(
+                    title: Text(dateFormat.format(r.completedAt)),
+                    subtitle: Text('${r.correctAnswers}/${r.totalQuestions}'),
+                  ),
                 ),
-              ),
             ],
           );
         },
