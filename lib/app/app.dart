@@ -3,8 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../features/history/presentation/history_screen.dart';
 import '../features/home/presentation/home_screen.dart';
-import 'features/quiz/presentation/quiz_results_screen.dart';
-import 'features/quiz/domain/models.dart';
+import '../features/quiz/presentation/quiz_results_screen.dart';
+import '../features/quiz/domain/models.dart';
 import '../features/quiz/presentation/quiz_screen.dart';
 import '../l10n/app_localizations.dart';
 import 'dependencies.dart';

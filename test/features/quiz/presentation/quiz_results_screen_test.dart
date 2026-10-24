@@ -4,10 +4,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:cuanto_recuerdas/app/dependencies.dart';
 import 'package:cuanto_recuerdas/app/services/advertising_service.dart';
+import 'package:cuanto_recuerdas/features/quiz/data/question_repository.dart';
 import 'package:cuanto_recuerdas/features/quiz/data/progress_repository.dart';
 import 'package:cuanto_recuerdas/features/quiz/data/progress_storage.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/daily_quiz_generator.dart';
-import 'package:cuanto_recuerdas/features/quiz/domain/models.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/quiz_scorer.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/streak_calculator.dart';
 import 'package:cuanto_recuerdas/features/quiz/presentation/quiz_results_screen.dart';
