@@ -10,6 +10,7 @@ import 'package:cuanto_recuerdas/features/quiz/data/question_repository.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/daily_quiz_generator.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/quiz_scorer.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/streak_calculator.dart';
+import 'package:cuanto_recuerdas/features/quiz/presentation/quiz_results_screen.dart';
 import 'package:cuanto_recuerdas/features/quiz/presentation/quiz_screen.dart';
 import 'package:cuanto_recuerdas/l10n/app_localizations.dart';
 
@@ -204,7 +205,7 @@ void main() {
       }
     }
 
-    expect(find.byType(QuizScreen), findsNothing);
+    expect(find.byType(QuizResultsScreen), findsOneWidget);
   });
 
   testWidgets(

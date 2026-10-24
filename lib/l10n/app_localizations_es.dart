@@ -61,4 +61,33 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get finishQuiz => 'Finalizar';
+
+  @override
+  String get resultsTitle => 'Resultados';
+
+  @override
+  String get score => 'Puntuación';
+
+  @override
+  String scoreFormat(int correct, int total) {
+    return '$correct/$total';
+  }
+
+  @override
+  String get feedbackPerfect => '¡Perfecto!';
+
+  @override
+  String get feedbackGreat => '¡Muy bien!';
+
+  @override
+  String get feedbackGood => 'Bien hecho.';
+
+  @override
+  String get feedbackAverage => 'Sigue practicando.';
+
+  @override
+  String get feedbackPoor => 'Sigue practicando.';
+
+  @override
+  String get backToHome => 'Volver al inicio';
 }

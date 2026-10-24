@@ -136,7 +136,7 @@ class _QuizScreenState extends State<QuizScreen> {
       setState(() {
         _finishing = false;
       });
-      Navigator.of(context).pop();
+      Navigator.of(context).pushNamed('/results', arguments: result);
     } catch (e) {
       if (!mounted) return;
       setState(() {
