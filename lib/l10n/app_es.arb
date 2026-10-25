@@ -58,6 +58,11 @@
       }
     }
   },
+  "onboardingTitle": "Bienvenido a ¿Cuánto recuerdas?",
+  "onboardingSubtitle": "Un reto diario de cultura popular española",
+  "onboardingDescription": "Responde 5 preguntas al día, sigue tu racha y mejora tu memoria.",
+  "onboardingStart": "Empezar",
+  "onboardingSkip": "Omitir",
   "statistics": "Estadísticas",
   "gamesPlayed": "Partidas jugadas",
   "correctAnswers": "Respuestas correctas",

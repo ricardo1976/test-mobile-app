@@ -12,6 +12,7 @@ import '../features/quiz/domain/streak_calculator.dart';
 
 import 'services/advertising_service.dart';
 import 'services/share_service.dart';
+import 'settings/settings_storage.dart';
 
 class AppDependencies {
   AppDependencies({
@@ -23,6 +24,7 @@ class AppDependencies {
     required this.streakCalculator,
     this.adService = const NoOpAdService(),
     this.shareService = const NoOpShareService(),
+    required this.settingsStorage,
   });
 
   final QuestionRepository questionRepository;
@@ -33,6 +35,7 @@ class AppDependencies {
   final StreakCalculator streakCalculator;
   final AdService adService;
   final ShareService shareService;
+  final SettingsStorage settingsStorage;
 
   Future<void> initialize() async {
     await questionRepository.load();
@@ -44,6 +47,7 @@ class AppDependencies {
     final file = progressFile ?? await _defaultProgressFile();
     final storage = FileProgressStorage(file);
     final progressRepository = ProgressRepository(storage: storage);
+    final settingsFile = await SettingsStorage.defaultFile();
     final dependencies = AppDependencies(
       questionRepository: QuestionRepository(),
       progressStorage: storage,
@@ -53,6 +57,7 @@ class AppDependencies {
       streakCalculator: const StreakCalculator(),
       adService: const NoOpAdService(),
       shareService: const NoOpShareService(),
+      settingsStorage: SettingsStorage(settingsFile),
     );
     await dependencies.initialize();
     return dependencies;
