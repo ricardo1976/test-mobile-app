@@ -3,7 +3,6 @@
 This document contains the product requirements and decisions for ¿Cuánto recuerdas?.
 
 ## V0.1
-
 - Platforms: Android and iOS.
 - Initial question bank: 500 questions.
 - Daily selection: deterministic mixture of categories and decades.
@@ -12,5 +11,6 @@ This document contains the product requirements and decisions for ¿Cuánto recu
 - Sharing results: supported.
 - Application: multilingual from the beginning.
 - Default language: Spanish (Spain, `es-ES`).
+- No accounts, no backend, works offline.
 
 Detailed product requirements should be added here as they are decided.

@@ -1,127 +1,18 @@
 # ¿Cuánto recuerdas? — Development Roadmap
 
 ## 1. Purpose
-
 This document defines the planned implementation roadmap for the first version of **¿Cuánto recuerdas?**, a nostalgic daily quiz application built with Flutter.
 
-The roadmap is the initial source of planned work. GitHub Issues must be created incrementally as implementation progresses rather than creating the entire backlog upfront.
-
-The coordinating agent is responsible for selecting the next eligible roadmap item, ensuring its requirements are sufficiently clear, creating the corresponding GitHub Issue, delegating implementation, and tracking its completion.
-
-## 2. Product scope
-
-### Platforms and technology
-
-- Flutter and Dart.
-- Android and iOS.
-- Multilingual architecture from the beginning.
-- Spanish (Spain), `es-ES`, as the default application locale.
-
-### Gameplay
-
-- One daily quiz containing five questions.
-- A deterministic daily selection that mixes categories and decades.
-- An initial question bank of 500 questions.
-- Exactly four answer options per question.
-- Exactly one correct answer per question.
-- An explanation associated with each question.
-
-### Initial question distribution
-
-| Category | Questions |
-|---|---:|
-| Television | 125 |
-| Music | 100 |
-| Cinema | 100 |
-| Video games and technology | 75 |
-| Everyday culture and memories | 100 |
-| **Total** | **500** |
-
-### Progress and persistence
-
-- Local persistence without mandatory accounts.
-- Daily completion status.
-- Quiz results and statistics.
-- Streak tracking.
-- Historical results.
-- Sharing of quiz results.
-
-### Monetization
-
-- Prepare an advertising abstraction.
-- Provide a no-op implementation for V0.1.
-- Do not integrate AdMob in V0.1.
-
-### Explicit exclusions from V0.1
-
-- Backend services.
-- User accounts and authentication.
-- Cloud synchronization.
-- Analytics integration.
-- Live or remotely managed questions.
-- Actual advertising delivery.
-
-## 3. Roadmap governance
-
-### Incremental GitHub Issue creation
-
-The roadmap entries below are planning references, not existing GitHub Issues.
-
-- `R01`–`R26` are stable internal roadmap identifiers.
-- They must not be presented as GitHub Issue numbers.
-- Before creating an Issue, check whether an equivalent Issue already exists.
-- Create a GitHub Epic when its first child Issue is ready to be created, unless an equivalent Epic already exists.
-- Create each child Issue when its scope, acceptance criteria, dependencies, and constraints are sufficiently clear.
-- Create additional sub-issues only when a roadmap item requires independently implementable work.
-- Link Issues to their parent Epic and establish dependency relationships where supported.
-- Update this roadmap as work progresses, without removing planned work that has not yet been implemented.
-- Do not create the entire backlog merely to populate GitHub.
-- If a roadmap item requires a product or architecture decision, request that decision before implementing the affected behavior.
-
-### Issue readiness
-
-Every implementation Issue must include:
-
-- Objective.
-- Scope.
-- Acceptance criteria.
-- Dependencies.
-- Relevant architectural and product constraints.
-- Testing and verification expectations.
-
-### Workflow
-
-1. Identify the next eligible roadmap item.
-2. Delegate requirements analysis to `issue-analyst`.
-3. Resolve material ambiguities and dependencies.
-4. Create or update the GitHub Issue and link it to its Epic.
-5. Delegate implementation to `developer`.
-6. Run relevant tests, formatting, and static analysis.
-7. Review the changes and create or update a Pull Request.
-8. Delegate an independent review to `pr-reviewer`.
-9. Resolve blocking findings and repeat verification.
-10. Update the Issue, Pull Request, and roadmap to reflect the actual outcome.
-11. Continue with the next eligible item.
-
-Independent work may run in parallel when dependencies are satisfied and file ownership does not create significant conflicts.
-
-The coordinator must never claim that an agent was invoked, an Issue was created, a test passed, or a review was completed unless the action actually occurred.
-
 ## 4. Epic hierarchy
-
-The planned hierarchy consists of seven Epics.
-
 | Epic reference | Epic title | Scope | Planned Issues |
 |---|---|---|---|
-| E01 | Foundation and Architecture | Project structure, localization, design foundations, dependency configuration | R01–R04 |
-| E02 | Question Bank and Game Engine | Question models, content validation, deterministic selection, scoring | R05–R08 |
-| E03 | Local Persistence and Progress | Storage, daily completion, statistics, streaks, history | R09–R11 |
-| E04 | Application Services | Dependency wiring and advertising abstraction | R12–R13 |
-| E05 | User Interface and Daily Experience | Navigation, onboarding, quiz flow, results, history, sharing | R14–R19 |
-| E06 | Quality and Reliability | Automated testing, content integrity, accessibility and resilience | R20–R22 |
-| E07 | Documentation and Release | Documentation, platform configuration, release validation | R23–R26 |
-
-These Epics define the planned scope, not mandatory execution batches. The coordinator may adjust sequencing when implementation findings justify it, while preserving traceability.
+| E01 | Foundation and Architecture | Project structure, localization, design foundations, dependency configuration | R01–R04 (completed) |
+| E02 | Question Bank and Game Engine | Question models, content validation, deterministic selection, scoring | R05–R08 (completed) |
+| E03 | Local Persistence and Progress | Storage, daily completion, statistics, streaks, history | R09–R11 (completed) |
+| E04 | Application Services | Dependency wiring and advertising abstraction | R12–R13 (completed) |
+| E05 | User Interface and Daily Experience | Navigation, onboarding, quiz flow, results, history, sharing | R14–R19 (completed) |
+| E06 | Quality and Reliability | Automated testing, content integrity, accessibility and resilience | R20–R22 (completed) |
+| E07 | Documentation and Release | Documentation, platform configuration, release validation | R23–R26 (in progress) |
 
 ---
 
