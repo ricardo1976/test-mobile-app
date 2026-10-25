@@ -92,6 +92,8 @@ The preferred workflow is:
 11. Perform an independent Pull Request review.
 12. Address blocking findings before considering the work complete.
 
+For changes involving CI, build configuration, dependencies, or SDK versions, require the developer agent to verify compatibility with the repository's declared toolchain and project constraints. The reviewer agent must independently check for version mismatches, weakened SDK constraints, and missing quality checks. Do not consider the task complete until verification results and any remaining limitations are reported.
+
 ## Agent roles
 
 Three specialized roles are available:
@@ -114,6 +116,7 @@ Three specialized roles are available:
   - Does not modify the implementation while performing the review.
   - Reports blocking findings separately from non-blocking recommendations.
 
+
 ## Definition of done
 
 A change is considered complete only when:
@@ -126,3 +129,34 @@ A change is considered complete only when:
 - Documentation is updated when the change affects documented behavior or architecture.
 - GitHub Issue and Pull Request state accurately reflect the work.
 - Git commits and GitHub artifacts are written in English.
+
+## Flutter/Dart Toolchain and CI Consistency
+
+### Source of truth
+
+- The project uses Flutter and Dart. Keep the local development environment, repository toolchain configuration, and GitHub Actions CI compatible and aligned.
+- The current development environment uses Flutter `3.47.7`. When configuring or updating CI, use this version unless an explicit, reviewed project decision establishes a different version.
+- Before changing toolchain configuration, inspect `pubspec.yaml`, any Flutter version-manager configuration (such as `.fvmrc`), existing CI workflows, and the actual installed Flutter/Dart versions when available.
+- If the repository defines an explicit Flutter SDK version, treat that configuration as the source of truth. Do not introduce a conflicting version in CI.
+- If no repository-level version is defined, use the established project development version and keep the CI configuration consistent with it.
+
+### Rules for CI workflows
+
+- Before creating or modifying a Flutter CI workflow, verify that the selected Flutter version provides a Dart SDK compatible with the `environment.sdk` constraint in `pubspec.yaml`.
+- Never choose an arbitrary or outdated Flutter version without checking its bundled Dart SDK.
+- Never weaken or lower the project's Dart SDK constraint merely to make CI pass. Fix the toolchain configuration instead, unless a deliberate SDK compatibility change has been approved.
+- Use a maintained, stable Flutter setup action and enable caching where appropriate.
+- Print `flutter --version` and `dart --version` in CI to make the effective toolchain visible in logs.
+- Preserve and execute the project's applicable quality checks, including dependency resolution, formatting, static analysis, question-bank validation, and tests.
+
+### Verification and review
+
+Before considering a CI change complete:
+
+1. Confirm the Flutter version selected by CI matches the project's declared toolchain version.
+2. Confirm the bundled Dart version satisfies `pubspec.yaml`.
+3. Verify that `flutter pub get`, `dart format --set-exit-if-changed .`, `flutter analyze`, `dart run tool/validate_questions.dart`, and `flutter test` are executed by CI.
+4. Run the checks locally when possible and inspect the GitHub Actions results when the workflow can be executed.
+5. Report any checks that could not be executed or verified. Never claim that CI passes based only on inspecting the YAML.
+
+These rules apply to every agent that creates, edits, reviews, or approves CI/toolchain changes. The coordinating agent must ensure that the final changes follow these rules before closing the task.
