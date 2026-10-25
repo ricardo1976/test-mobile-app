@@ -46,6 +46,27 @@ class AppLocalizationsEs extends AppLocalizations {
   String get history => 'Historial';
 
   @override
+  String get statistics => 'Estadísticas';
+
+  @override
+  String get gamesPlayed => 'Partidas jugadas';
+
+  @override
+  String get correctAnswers => 'Respuestas correctas';
+
+  @override
+  String get totalAnswers => 'Respuestas totales';
+
+  @override
+  String get accuracy => 'Precisión';
+
+  @override
+  String get currentStreak => 'Racha actual';
+
+  @override
+  String get longestStreak => 'Mejor racha';
+
+  @override
   String get noQuestionsAvailable => 'No hay preguntas disponibles';
 
   @override
