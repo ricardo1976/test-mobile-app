@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../features/history/presentation/history_screen.dart';
 import '../features/home/presentation/home_screen.dart';
+import '../features/onboarding/presentation/onboarding_screen.dart';
 import '../features/quiz/presentation/quiz_results_screen.dart';
 import '../features/quiz/domain/models.dart';
 import '../features/quiz/presentation/quiz_screen.dart';
@@ -20,7 +21,7 @@ class CuantoRecuerdasApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '?Cu?nto recuerdas?',
+      title: '¿Cuánto recuerdas?',
       debugShowCheckedModeBanner: false,
       locale: _locale,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -29,12 +30,29 @@ class CuantoRecuerdasApp extends StatelessWidget {
         ...GlobalMaterialLocalizations.delegates,
       ],
       theme: AppTheme.light,
-      initialRoute: '/',
+      home: FutureBuilder<bool>(
+        future: dependencies.settingsStorage.isOnboardingCompleted(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+          if (snapshot.data == true) {
+            return HomeScreen(dependencies: dependencies);
+          }
+          return OnboardingScreen(dependencies: dependencies);
+        },
+      ),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
               builder: (_) => HomeScreen(dependencies: dependencies),
+            );
+          case '/onboarding':
+            return MaterialPageRoute(
+              builder: (_) => OnboardingScreen(dependencies: dependencies),
             );
           case '/quiz':
             return MaterialPageRoute(

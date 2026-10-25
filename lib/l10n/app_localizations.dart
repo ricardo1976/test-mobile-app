@@ -262,6 +262,36 @@ abstract class AppLocalizations {
   /// **'He sacado {correct}/{total} en \"¿Cuánto recuerdas?\". ¡Pruébalo tú también!'**
   String shareResultText(int correct, int total);
 
+  /// No description provided for @onboardingTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Bienvenido a ¿Cuánto recuerdas?'**
+  String get onboardingTitle;
+
+  /// No description provided for @onboardingSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Un reto diario de cultura popular española'**
+  String get onboardingSubtitle;
+
+  /// No description provided for @onboardingDescription.
+  ///
+  /// In es, this message translates to:
+  /// **'Responde 5 preguntas al día, sigue tu racha y mejora tu memoria.'**
+  String get onboardingDescription;
+
+  /// No description provided for @onboardingStart.
+  ///
+  /// In es, this message translates to:
+  /// **'Empezar'**
+  String get onboardingStart;
+
+  /// No description provided for @onboardingSkip.
+  ///
+  /// In es, this message translates to:
+  /// **'Omitir'**
+  String get onboardingSkip;
+
   /// No description provided for @statistics.
   ///
   /// In es, this message translates to:

@@ -100,6 +100,22 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get onboardingTitle => 'Bienvenido a ¿Cuánto recuerdas?';
+
+  @override
+  String get onboardingSubtitle => 'Un reto diario de cultura popular española';
+
+  @override
+  String get onboardingDescription =>
+      'Responde 5 preguntas al día, sigue tu racha y mejora tu memoria.';
+
+  @override
+  String get onboardingStart => 'Empezar';
+
+  @override
+  String get onboardingSkip => 'Omitir';
+
+  @override
   String get statistics => 'Estadísticas';
 
   @override
