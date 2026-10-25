@@ -46,6 +46,18 @@
   "feedbackAverage": "Sigue practicando.",
   "feedbackPoor": "Sigue practicando.",
   "backToHome": "Volver al inicio",
+  "shareResult": "Compartir resultado",
+  "shareResultText": "He sacado {correct}/{total} en \"¿Cuánto recuerdas?\". ¡Pruébalo tú también!",
+  "@shareResultText": {
+    "placeholders": {
+      "correct": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "statistics": "Estadísticas",
   "gamesPlayed": "Partidas jugadas",
   "correctAnswers": "Respuestas correctas",
