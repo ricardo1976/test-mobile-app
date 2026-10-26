@@ -10,6 +10,8 @@ import 'package:cuanto_recuerdas/features/quiz/domain/daily_quiz_generator.dart'
 import 'package:cuanto_recuerdas/features/quiz/domain/quiz_scorer.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/streak_calculator.dart';
 
+import 'app/test_utils.dart';
+
 class _InMemoryStorage implements ProgressStorage {
   StoredProgress _value = StoredProgress.empty();
 
@@ -58,6 +60,7 @@ void main() {
       quizScorer: const QuizScorer(),
       streakCalculator: const StreakCalculator(),
       adService: const NoOpAdService(),
+      settingsStorage: testSettingsStorage(),
     );
     await dependencies.initialize();
     await tester.pumpWidget(CuantoRecuerdasApp(dependencies: dependencies));

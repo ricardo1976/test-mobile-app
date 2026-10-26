@@ -11,6 +11,8 @@ import 'package:cuanto_recuerdas/features/quiz/domain/daily_quiz_generator.dart'
 import 'package:cuanto_recuerdas/features/quiz/domain/quiz_scorer.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/streak_calculator.dart';
 
+import 'test_utils.dart';
+
 class _FakeAdService implements AdService {
   int initializeCalls = 0;
   int showInterstitialCalls = 0;
@@ -52,6 +54,7 @@ void main() {
       quizScorer: const QuizScorer(),
       streakCalculator: const StreakCalculator(),
       adService: custom,
+      settingsStorage: testSettingsStorage(),
     );
 
     expect(dependencies.adService, same(custom));

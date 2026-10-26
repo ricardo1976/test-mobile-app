@@ -11,6 +11,8 @@ import 'package:cuanto_recuerdas/features/quiz/domain/daily_quiz_generator.dart'
 import 'package:cuanto_recuerdas/features/quiz/domain/quiz_scorer.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/streak_calculator.dart';
 
+import 'test_utils.dart';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -53,6 +55,7 @@ void main() {
       dailyQuizGenerator: const DailyQuizGenerator(),
       quizScorer: const QuizScorer(),
       streakCalculator: const StreakCalculator(),
+      settingsStorage: testSettingsStorage(),
     );
 
     await dependencies.initialize();

@@ -14,6 +14,8 @@ import 'package:cuanto_recuerdas/l10n/app_localizations.dart';
 import 'package:cuanto_recuerdas/features/quiz/presentation/quiz_results_screen.dart';
 import 'package:cuanto_recuerdas/features/quiz/domain/models.dart';
 
+import '../../../../app/test_utils.dart';
+
 class _InMemoryStorage implements ProgressStorage {
   StoredProgress _value = StoredProgress.empty();
 
@@ -58,6 +60,7 @@ Future<AppDependencies> _buildDeps() async {
     quizScorer: const QuizScorer(),
     streakCalculator: const StreakCalculator(),
     adService: const NoOpAdService(),
+    settingsStorage: testSettingsStorage(),
   );
   await dependencies.initialize();
   return dependencies;
