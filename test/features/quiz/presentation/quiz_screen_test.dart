@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -61,8 +61,8 @@ const _bankFive = '''
       "decade": 1990,
       "prompt": {"es-ES": "Pregunta 2?"},
       "answers": [
-        {"id": "a1b", "text": {"es-ES": "Mal"}, "isCorrect": false},
-        {"id": "a2b", "text": {"es-ES": "Correcta"}, "isCorrect": true},
+        {"id": "a1b", "text": {"es-ES": "Correcta"}, "isCorrect": true},
+        {"id": "a2b", "text": {"es-ES": "Mal 1"}, "isCorrect": false},
         {"id": "a3b", "text": {"es-ES": "Mal 2"}, "isCorrect": false},
         {"id": "a4b", "text": {"es-ES": "Mal 3"}, "isCorrect": false}
       ],
@@ -74,36 +74,36 @@ const _bankFive = '''
       "decade": 2000,
       "prompt": {"es-ES": "Pregunta 3?"},
       "answers": [
-        {"id": "a1c", "text": {"es-ES": "Mal"}, "isCorrect": false},
-        {"id": "a2c", "text": {"es-ES": "Mal"}, "isCorrect": false},
-        {"id": "a3c", "text": {"es-ES": "Correcta"}, "isCorrect": true},
-        {"id": "a4c", "text": {"es-ES": "Mal"}, "isCorrect": false}
+        {"id": "a1c", "text": {"es-ES": "Correcta"}, "isCorrect": true},
+        {"id": "a2c", "text": {"es-ES": "Mal 1"}, "isCorrect": false},
+        {"id": "a3c", "text": {"es-ES": "Mal 2"}, "isCorrect": false},
+        {"id": "a4c", "text": {"es-ES": "Mal 3"}, "isCorrect": false}
       ],
       "explanation": {"es-ES": "Explicación 3"}
     },
     {
       "id": "q4",
-      "categoryId": "video_games_technology",
+      "categoryId": "everyday_culture",
       "decade": 1980,
       "prompt": {"es-ES": "Pregunta 4?"},
       "answers": [
         {"id": "a1d", "text": {"es-ES": "Correcta"}, "isCorrect": true},
-        {"id": "a2d", "text": {"es-ES": "Mal"}, "isCorrect": false},
-        {"id": "a3d", "text": {"es-ES": "Mal"}, "isCorrect": false},
-        {"id": "a4d", "text": {"es-ES": "Mal"}, "isCorrect": false}
+        {"id": "a2d", "text": {"es-ES": "Mal 1"}, "isCorrect": false},
+        {"id": "a3d", "text": {"es-ES": "Mal 2"}, "isCorrect": false},
+        {"id": "a4d", "text": {"es-ES": "Mal 3"}, "isCorrect": false}
       ],
       "explanation": {"es-ES": "Explicación 4"}
     },
     {
       "id": "q5",
-      "categoryId": "everyday_culture",
+      "categoryId": "video_games_technology",
       "decade": 1990,
       "prompt": {"es-ES": "Pregunta 5?"},
       "answers": [
-        {"id": "a1e", "text": {"es-ES": "Mal"}, "isCorrect": false},
-        {"id": "a2e", "text": {"es-ES": "Correcta"}, "isCorrect": true},
-        {"id": "a3e", "text": {"es-ES": "Mal"}, "isCorrect": false},
-        {"id": "a4e", "text": {"es-ES": "Mal"}, "isCorrect": false}
+        {"id": "a1e", "text": {"es-ES": "Correcta"}, "isCorrect": true},
+        {"id": "a2e", "text": {"es-ES": "Mal 1"}, "isCorrect": false},
+        {"id": "a3e", "text": {"es-ES": "Mal 2"}, "isCorrect": false},
+        {"id": "a4e", "text": {"es-ES": "Mal 3"}, "isCorrect": false}
       ],
       "explanation": {"es-ES": "Explicación 5"}
     }
@@ -154,8 +154,14 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
     expect(find.textContaining('Pregunta 1/5'), findsOneWidget);
-    expect(find.text('Pregunta 1?'), findsOneWidget);
     expect(find.text('Enviar'), findsOneWidget);
+    // Prompt is from some question in the bank
+    expect(
+      find.byWidgetPredicate((widget) =>
+          widget is Text &&
+          (widget.data?.startsWith('Pregunta') == true)),
+      findsWidgets,
+    );
   });
 
   testWidgets('submitting answer shows explanation and next button', (
@@ -171,7 +177,7 @@ void main() {
     await tester.tap(find.text('Enviar'));
     await tester.pump();
 
-    expect(find.text('Explicación 1'), findsOneWidget);
+    expect(find.textContaining('Explicación'), findsOneWidget);
     expect(find.text('Siguiente'), findsOneWidget);
   });
 

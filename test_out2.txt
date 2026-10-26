@@ -1,0 +1,87 @@
+﻿00:00 +0: loading C:/workingfolder/git_own/test-mobile-app/test/features/quiz/presentation/quiz_screen_test.dart
+00:00 +0: loads quiz and shows first question with localized strings
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Pregunta 1?": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///C:/workingfolder/git_own/test-mobile-app/test/features/quiz/presentation/quiz_screen_test.dart:157:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///C:/workingfolder/git_own/test-mobile-app/test/features/quiz/presentation/quiz_screen_test.dart line 157
+The test description was:
+  loads quiz and shows first question with localized strings
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -1: loads quiz and shows first question with localized strings [E]
+  Test failed. See exception logs above.
+  The test description was: loads quiz and shows first question with localized strings
+  
+00:00 +0 -1: submitting answer shows explanation and next button
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Explicación 1": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///C:/workingfolder/git_own/test-mobile-app/test/features/quiz/presentation/quiz_screen_test.dart:174:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///C:/workingfolder/git_own/test-mobile-app/test/features/quiz/presentation/quiz_screen_test.dart line 174
+The test description was:
+  submitting answer shows explanation and next button
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -2: submitting answer shows explanation and next button [E]
+  Test failed. See exception logs above.
+  The test description was: submitting answer shows explanation and next button
+  
+00:00 +0 -2: completes quiz after answering all questions
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TypeWidgetFinder:<Found 0 widgets with type "QuizResultsScreen": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///C:/workingfolder/git_own/test-mobile-app/test/features/quiz/presentation/quiz_screen_test.dart:211:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///C:/workingfolder/git_own/test-mobile-app/test/features/quiz/presentation/quiz_screen_test.dart line 211
+The test description was:
+  completes quiz after answering all questions
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:00 +0 -3: completes quiz after answering all questions [E]
+  Test failed. See exception logs above.
+  The test description was: completes quiz after answering all questions
+  
+00:00 +0 -3: selecting incorrect answer shows explanation and does not close
+00:00 +1 -3: shows error state on record failure and does not close on retry
+00:01 +2 -3: Some tests failed.
+
+Failing tests:
+  C:/workingfolder/git_own/test-mobile-app/test/features/quiz/presentation/quiz_screen_test.dart: completes quiz after answering all questions
+  C:/workingfolder/git_own/test-mobile-app/test/features/quiz/presentation/quiz_screen_test.dart: loads quiz and shows first question with localized strings
+  C:/workingfolder/git_own/test-mobile-app/test/features/quiz/presentation/quiz_screen_test.dart: submitting answer shows explanation and next button
