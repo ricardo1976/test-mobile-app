@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../app/dependencies.dart';
 import '../../../app/widgets/app_buttons.dart';
+import 'quiz_results_screen.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../quiz/domain/models.dart';
 
@@ -136,7 +137,14 @@ class _QuizScreenState extends State<QuizScreen> {
       setState(() {
         _finishing = false;
       });
-      Navigator.of(context).pushNamed('/results', arguments: result);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => QuizResultsScreen(
+            dependencies: widget.dependencies,
+            result: result,
+          ),
+        ),
+      );
     } catch (e) {
       if (!mounted) return;
       setState(() {
