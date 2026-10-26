@@ -260,12 +260,12 @@ void main() {
         questionRepository: deps.questionRepository,
         progressStorage: failingStorage,
         progressRepository: failingProgressRepo,
-      dailyQuizGenerator: deps.dailyQuizGenerator,
-      quizScorer: deps.quizScorer,
-      streakCalculator: deps.streakCalculator,
-      adService: deps.adService,
-      settingsStorage: deps.settingsStorage,
-    );
+        dailyQuizGenerator: deps.dailyQuizGenerator,
+        quizScorer: deps.quizScorer,
+        streakCalculator: deps.streakCalculator,
+        adService: deps.adService,
+        settingsStorage: deps.settingsStorage,
+      );
       await failingDeps.initialize();
 
       await tester.pumpWidget(_buildTestApp(failingDeps));
