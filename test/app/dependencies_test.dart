@@ -80,6 +80,7 @@ void main() {
       dailyQuizGenerator: const DailyQuizGenerator(),
       quizScorer: const QuizScorer(),
       streakCalculator: const StreakCalculator(),
+      settingsStorage: testSettingsStorage(),
     );
     expect(dependencies.questionRepository, same(questionRepository));
     expect(dependencies.progressRepository, same(progressRepository));
