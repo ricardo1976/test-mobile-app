@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -157,9 +157,10 @@ void main() {
     expect(find.text('Enviar'), findsOneWidget);
     // Prompt is from some question in the bank
     expect(
-      find.byWidgetPredicate((widget) =>
-          widget is Text &&
-          (widget.data?.startsWith('Pregunta') == true)),
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is Text && (widget.data?.startsWith('Pregunta') == true),
+      ),
       findsWidgets,
     );
   });
