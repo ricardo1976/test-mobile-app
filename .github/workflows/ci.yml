@@ -23,6 +23,6 @@ jobs:
       - name: Analyze
         run: flutter analyze
       - name: Validate question bank
-        run: dart run tool/validate_questions.dart
+        run: dart run tool/validate_questions.dart assets/questions.json
       - name: Run tests
         run: flutter test
